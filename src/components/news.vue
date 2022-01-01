@@ -30,11 +30,17 @@
               v-model="tabs"
               style="background-color: transparent"
             >
-              <v-tab @change="cat('All')">All</v-tab>
+              <!-- <v-tab @change="cat('All')">All</v-tab>
               <v-tab @change="cat('Video')">Video</v-tab>
               <v-tab @change="cat('Music')">Music</v-tab>
               <v-tab @change="cat('Life')">Events</v-tab>
-              <v-tab @change="cat('Social')">Social</v-tab>
+              <v-tab @change="cat('Social')">Social</v-tab> -->
+
+              <v-tab >All</v-tab>
+              <v-tab >Video</v-tab>
+              <v-tab >Music</v-tab>
+              <v-tab >Events</v-tab>
+              <v-tab >Social</v-tab>
 
               <v-tabs-items
                 v-model="tabs"
@@ -606,19 +612,19 @@
                         </v-card>
                       </v-col>
                     </v-row>
-                                          <v-snackbar v-model="snackbar" :timeout="2000">
-                        {{ resp }}
-                        <template v-slot:action="{ attrs }">
-                          <v-btn
-                            color="blue"
-                            text
-                            v-bind="attrs"
-                            @click="snackbar = false"
-                          >
-                            Close
-                          </v-btn>
-                        </template>
-                      </v-snackbar>
+                    <v-snackbar v-model="snackbar" :timeout="2000">
+                      {{ resp }}
+                      <template v-slot:action="{ attrs }">
+                        <v-btn
+                          color="blue"
+                          text
+                          v-bind="attrs"
+                          @click="snackbar = false"
+                        >
+                          Close
+                        </v-btn>
+                      </template>
+                    </v-snackbar>
                   </v-container>
                 </v-tab-item>
               </v-tabs-items>
@@ -778,6 +784,7 @@ export default {
     Newslength: 0,
     DataComment: [],
     SelectedItemIndex: 0,
+    cate: ["ALL", "Video", "Music", "Life", "Social"],
 
     //comment
     name: "",
@@ -817,8 +824,8 @@ export default {
         // ADD TO BACKEND
         const axios = require("axios");
         let base_url =
-        //  `http://192.168.1.10/music%20project/music%20project/public/api/News/addLike/${this.SelectedItems[i].id}`;
-         `http://asmusicbackend-07251.herokuapp.com/public/api/News/addLike/${this.SelectedItems[i].id}`;
+          //  `http://192.168.1.10/music%20project/music%20project/public/api/News/addLike/${this.SelectedItems[i].id}`;
+          `http://asmusicbackend-07251.herokuapp.com/public/api/News/addLike/${this.SelectedItems[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -832,9 +839,9 @@ export default {
       } else {
         this.SelectedItems[i].likes.number--;
         const axios = require("axios");
-        let base_url = 
-        // `http://192.168.1.10/music%20project/music%20project/public/api/News/subLike/${this.SelectedItems[i].id}`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/News/subLike/${this.SelectedItems[i].id}`;
+        let base_url =
+          // `http://192.168.1.10/music%20project/music%20project/public/api/News/subLike/${this.SelectedItems[i].id}`;
+          `http://asmusicbackend-07251.herokuapp.com/public/api/News/subLike/${this.SelectedItems[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -859,9 +866,9 @@ export default {
         this.items[i].share.number++;
 
         const axios = require("axios");
-        let base_url = 
-        // `http://192.168.1.10/music%20project/music%20project/public/api/News/addShare/${this.SelectedItems[i].id}`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/News/addShare/${this.SelectedItems[i].id}`;
+        let base_url =
+          // `http://192.168.1.10/music%20project/music%20project/public/api/News/addShare/${this.SelectedItems[i].id}`;
+          `http://asmusicbackend-07251.herokuapp.com/public/api/News/addShare/${this.SelectedItems[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -880,24 +887,24 @@ export default {
       );
     },
     // tabs
-    cat(value) {
-      if (value == "All") {
-        this.SelectedItems = this.items;
-      } else {
-        this.SelectedItems = this.items.filter((e) => {
-          return e.category == value;
-        });
-      }
-      // console.log(this.SelectedItems);
-      this.messages = [];
-      for (let n = 0; n < this.SelectedItems.length; n++) {
-        this.messages[n] = {
-          Title: this.SelectedItems[n].title,
-          time: this.SelectedItems[n].Date,
-          color: this.colors[Math.floor(Math.random() * this.colors.length)],
-        };
-      }
-    },
+    // cat(value) {
+    //   if (value == "All") {
+    //     this.SelectedItems = this.items;
+    //   } else {
+    //     this.SelectedItems = this.items.filter((e) => {
+    //       return e.category == value;
+    //     });
+    //   }
+    //   // console.log(this.SelectedItems);
+    //   this.messages = [];
+    //   for (let n = 0; n < this.SelectedItems.length; n++) {
+    //     this.messages[n] = {
+    //       Title: this.SelectedItems[n].title,
+    //       time: this.SelectedItems[n].Date,
+    //       color: this.colors[Math.floor(Math.random() * this.colors.length)],
+    //     };
+    //   }
+    // },
     //date
     getRandomDate(from, to) {
       from = from.getTime();
@@ -1015,8 +1022,8 @@ export default {
       //api
       const axios = require("axios");
       let base_url =
-      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/addNewsComment`;
-       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addNewsComment`;
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/addNewsComment`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addNewsComment`;
       axios
         .post(base_url, {
           name: this.name,
@@ -1076,9 +1083,9 @@ export default {
       };
       //api
       const axios = require("axios");
-      let base_url = 
-      // `http://192.168.1.10/music%20project/music%20project/public/api/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
-      `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
+      let base_url =
+        // `http://192.168.1.10/music%20project/music%20project/public/api/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
       axios
         .post(base_url, {
           name: this.Editname,
@@ -1120,8 +1127,8 @@ export default {
       console.log(n);
       const axios = require("axios");
       let base_url =
-      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
-       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
       axios.post(base_url).then((response) => {
         this.resp = response.data.Success;
         this.snackbar = true;
@@ -1170,6 +1177,7 @@ export default {
   created() {
     this.getApi();
     this.colorDark();
+    this.SelectedItems = this.items;
   },
   computed: {
     api() {
@@ -1192,6 +1200,25 @@ export default {
     },
     color() {
       this.switch1 = this.$store.state.switch;
+    },
+    tabs(value) {
+      // console.log(this.tabs);
+      if (value == 0) {
+        this.SelectedItems = this.items;
+      } else {
+        this.SelectedItems = this.items.filter((e) => {
+          return e.category == this.cate[value];
+        });
+      }
+
+      this.messages = [];
+      for (let n = 0; n < this.SelectedItems.length; n++) {
+        this.messages[n] = {
+          Title: this.SelectedItems[n].title,
+          time: this.SelectedItems[n].Date,
+          color: this.colors[Math.floor(Math.random() * this.colors.length)],
+        };
+      }
     },
   },
 };
