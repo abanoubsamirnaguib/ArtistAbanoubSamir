@@ -30,11 +30,11 @@
               v-model="tabs"
               style="background-color: transparent"
             >
-              <v-tab @click="cat('All')">All</v-tab>
-              <v-tab @click="cat('Video')">Video</v-tab>
-              <v-tab @click="cat('Music')">Music</v-tab>
-              <v-tab @click="cat('Life')">Events</v-tab>
-              <v-tab @click="cat('Social')">Social</v-tab>
+              <v-tab @change="cat('All')">All</v-tab>
+              <v-tab @change="cat('Video')">Video</v-tab>
+              <v-tab @change="cat('Music')">Music</v-tab>
+              <v-tab @change="cat('Life')">Events</v-tab>
+              <v-tab @change="cat('Social')">Social</v-tab>
 
               <v-tabs-items
                 v-model="tabs"
