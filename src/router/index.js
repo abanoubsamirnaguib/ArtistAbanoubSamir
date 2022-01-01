@@ -14,7 +14,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home ,
-    alias:"/Home2",
+    alias:"/Home",
     meta: {
       title: 'Music || Home'
     }
