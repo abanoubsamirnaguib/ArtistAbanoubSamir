@@ -392,7 +392,9 @@ export default {
       var axios = require("axios");
       var config = {
         method: "post",
-        url: "http://localhost/music%20project/music%20project/public/api/ContactMe",
+        url:
+        //  "http://localhost/music%20project/music%20project/public/api/ContactMe",
+         "http://asmusicbackend-07251.herokuapp.com/api/ContactMe",
         data: {
           Name: this.name,
           phoneNumber: this.phoneNumber,
