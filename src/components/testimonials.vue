@@ -230,7 +230,8 @@ export default {
   created() {
     const axios = require("axios");
     var base_url =
-      "http://192.168.1.10/music%20project/music%20project/public/api/testimonials";
+      // "http://192.168.1.10/music%20project/music%20project/public/api/testimonials";
+      "http://asmusicbackend-07251.herokuapp.com/public/api/testimonials";
     axios
       .get(base_url)
       .then((response) => {
@@ -264,7 +265,9 @@ export default {
         this.items[i].likes.number++;
         // ADD TO BACKEND
         const axios = require("axios");
-        let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/addLike/${this.items[i].id}`;
+        let base_url =
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/addLike/${this.items[i].id}`;
+         `http://asmusicbackend-07251.herokuapp.com/public/api/testimonials/addLike/${this.items[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -280,7 +283,9 @@ export default {
         this.items[i].likes.number--;
         // ADD TO BACKEND
         const axios = require("axios");
-        let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/subLike/${this.items[i].id}`;
+        let base_url = 
+        // `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/subLike/${this.items[i].id}`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/testimonials/subLike/${this.items[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {

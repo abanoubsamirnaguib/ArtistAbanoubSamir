@@ -975,7 +975,9 @@ export default {
       });
       //api
       const axios = require("axios");
-      let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/comments/addPhotoComment`;
+      let base_url = 
+      // `http://192.168.1.10/music%20project/music%20project/public/api/comments/addPhotoComment`;
+      `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addPhotoComment`;
       axios
         .post(base_url, {
           name: this.name,
@@ -1035,7 +1037,9 @@ export default {
       };
       //api
       const axios = require("axios");
-      let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/comments/editPhotoComment/${this.photos[n].comments[p].id}`;
+      let base_url = 
+      // `http://192.168.1.10/music%20project/music%20project/public/api/comments/editPhotoComment/${this.photos[n].comments[p].id}`;
+      `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editPhotoComment/${this.photos[n].comments[p].id}`;
       axios
         .post(base_url, {
           name: this.Editname,
@@ -1083,7 +1087,9 @@ export default {
 
       // api
       const axios = require("axios");
-      let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/comments/deletePhotoComment/${this.photos[n].comments[p].id}`;
+      let base_url =
+      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deletePhotoComment/${this.photos[n].comments[p].id}`;
+       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deletePhotoComment/${this.photos[n].comments[p].id}`;
       axios.post(base_url).then((response) => {
         this.resp = response.data.Success;
         this.snackbar = true;

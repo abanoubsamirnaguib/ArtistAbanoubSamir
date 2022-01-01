@@ -916,12 +916,16 @@ export default {
         this.tracks[i].likes.number++;
         // ADD TO BACKEND
         const axios = require("axios");
-        let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/Music/addLike/${this.tracks[i].id}`;
+        let base_url =
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/addLike/${this.tracks[i].id}`;
+         `http://asmusicbackend-07251.herokuapp.com/public/api/Music/addLike/${this.tracks[i].id}`;
         axios.get(base_url);
       } else {
         this.tracks[i].likes.number--;
         const axios = require("axios");
-        let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/Music/subLike/${this.tracks[i].id}`;
+        let base_url =
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/subLike/${this.tracks[i].id}`;
+         `http://asmusicbackend-07251.herokuapp.com/public/api/Music/subLike/${this.tracks[i].id}`;
         axios.get(base_url);
       }
       localStorage.setItem(
@@ -934,7 +938,9 @@ export default {
       if (this.tracks[i].share.bol == true) {
         this.tracks[i].share.number++;
         const axios = require("axios");
-        let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/Music/addShare/${this.tracks[i].id}`;
+        let base_url =
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/addShare/${this.tracks[i].id}`;
+         `http://asmusicbackend-07251.herokuapp.com/public/api/Music/addShare/${this.tracks[i].id}`;
         axios.get(base_url);
       }
       localStorage.setItem(
@@ -977,7 +983,8 @@ export default {
     getComets() {
       const axios = require("axios");
       var base_url =
-        "http://192.168.1.10/music%20project/music%20project/public/api/comments/Music";
+        // "http://192.168.1.10/music%20project/music%20project/public/api/comments/Music";
+        "http://asmusicbackend-07251.herokuapp.com/public/api/comments/Music";
       axios.get(base_url).then((responseComment) => {
         var DataComment = responseComment.data.data;
         this.DataComment = DataComment;
@@ -1019,7 +1026,9 @@ export default {
       });
       //api
       const axios = require("axios");
-      let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/comments/addMusicComment`;
+      let base_url = 
+      // `http://192.168.1.10/music%20project/music%20project/public/api/comments/addMusicComment`;
+      `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addMusicComment`;
       axios
         .post(base_url, {
           name: this.name,
@@ -1076,7 +1085,9 @@ export default {
       };
       //api
       const axios = require("axios");
-      let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/comments/editMusicComment/${this.comments[p].id}`;
+      let base_url =
+      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/editMusicComment/${this.comments[p].id}`;
+       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editMusicComment/${this.comments[p].id}`;
       axios
         .post(base_url, {
           name: this.Editname,
@@ -1118,7 +1129,9 @@ export default {
       // api
       console.log(n);
       const axios = require("axios");
-      let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteMusicComment/${this.comments[p].id}`;
+      let base_url =
+      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteMusicComment/${this.comments[p].id}`;
+       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteMusicComment/${this.comments[p].id}`;
       axios.post(base_url).then((response) => {
         this.resp = response.data.Success;
         this.snackbar = true;
@@ -1169,7 +1182,8 @@ export default {
     // api
     const axios = require("axios");
     var base_url =
-      "http://192.168.1.10/music%20project/music%20project/public/api/Music";
+      // "http://192.168.1.10/music%20project/music%20project/public/api/Music";
+      "http://asmusicbackend-07251.herokuapp.com/public/api/Music";
     axios
       .get(base_url)
       .then((response) => {

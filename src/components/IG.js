@@ -22,7 +22,8 @@ module.exports = function (Callback) {
             if (Callback) {
                 // comment api
                 var base_url =
-                    "http://192.168.1.10/music%20project/music%20project/public/api/comments/Photos";
+                    // "http://192.168.1.10/music%20project/music%20project/public/api/comments/Photos";
+                    "http://asmusicbackend-07251.herokuapp.com/public/api/comments/Photos";
                 axios
                     .get(base_url)
                     .then((responseComment) => {

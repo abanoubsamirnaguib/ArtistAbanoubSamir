@@ -19,7 +19,8 @@ module.exports = function (options, Callback) {
 
                 // comments
                 var base_url =
-                    "http://192.168.1.10/music%20project/music%20project/public/api/comments/Videos";
+                    // "http://192.168.1.10/music%20project/music%20project/public/api/comments/Videos";
+                    "http://asmusicbackend-07251.herokuapp.com/public/api/comments/Videos";
                 axios
                     .get(base_url)
                     .then((responseComment) => {

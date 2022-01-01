@@ -816,7 +816,9 @@ export default {
 
         // ADD TO BACKEND
         const axios = require("axios");
-        let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/News/addLike/${this.SelectedItems[i].id}`;
+        let base_url =
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/News/addLike/${this.SelectedItems[i].id}`;
+         `http://asmusicbackend-07251.herokuapp.com/public/api/News/addLike/${this.SelectedItems[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -830,7 +832,9 @@ export default {
       } else {
         this.SelectedItems[i].likes.number--;
         const axios = require("axios");
-        let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/News/subLike/${this.SelectedItems[i].id}`;
+        let base_url = 
+        // `http://192.168.1.10/music%20project/music%20project/public/api/News/subLike/${this.SelectedItems[i].id}`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/News/subLike/${this.SelectedItems[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -855,7 +859,9 @@ export default {
         this.items[i].share.number++;
 
         const axios = require("axios");
-        let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/News/addShare/${this.SelectedItems[i].id}`;
+        let base_url = 
+        // `http://192.168.1.10/music%20project/music%20project/public/api/News/addShare/${this.SelectedItems[i].id}`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/News/addShare/${this.SelectedItems[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -912,7 +918,8 @@ export default {
       // api
       const axios = require("axios");
       var base_url =
-        "http://192.168.1.10/music%20project/music%20project/public/api/News";
+        // "http://192.168.1.10/music%20project/music%20project/public/api/News";
+        "http://asmusicbackend-07251.herokuapp.com/public/api/News";
       await axios
         .get(base_url)
         .then((response) => {
@@ -960,7 +967,8 @@ export default {
     getComets() {
       const axios = require("axios");
       var base_url =
-        "http://192.168.1.10/music%20project/music%20project/public/api/comments/News";
+        // "http://192.168.1.10/music%20project/music%20project/public/api/comments/News";
+        "http://asmusicbackend-07251.herokuapp.com/public/api/comments/News";
       axios.get(base_url).then((responseComment) => {
         var DataComment = responseComment.data.data;
         this.DataComment = DataComment;
@@ -1006,7 +1014,9 @@ export default {
       });
       //api
       const axios = require("axios");
-      let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/comments/addNewsComment`;
+      let base_url =
+      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/addNewsComment`;
+       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addNewsComment`;
       axios
         .post(base_url, {
           name: this.name,
@@ -1066,7 +1076,9 @@ export default {
       };
       //api
       const axios = require("axios");
-      let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
+      let base_url = 
+      // `http://192.168.1.10/music%20project/music%20project/public/api/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
+      `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
       axios
         .post(base_url, {
           name: this.Editname,
@@ -1107,7 +1119,9 @@ export default {
       // api
       console.log(n);
       const axios = require("axios");
-      let base_url = `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
+      let base_url =
+      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
+       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
       axios.post(base_url).then((response) => {
         this.resp = response.data.Success;
         this.snackbar = true;
