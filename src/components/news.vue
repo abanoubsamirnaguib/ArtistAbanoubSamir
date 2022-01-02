@@ -13,7 +13,16 @@
         </v-col>
       </v-row>
 
-      <v-row>
+          <v-progress-circular
+            v-if="!api"
+            :size="200"
+            :width="10"
+            color="red "
+            class="mt-4"
+            indeterminate
+          ></v-progress-circular>
+
+      <v-row  v-if="api">
         <v-col :lg="9" :sm="12">
           <v-card-title
             class="text-h5 bg-dark d-block text-center text-light rounded-3"
@@ -630,14 +639,6 @@
               </v-tabs-items>
             </v-tabs>
           </v-card>
-          <v-progress-circular
-            v-if="!api"
-            :size="200"
-            :width="10"
-            color="red "
-            class="mt-4"
-            indeterminate
-          ></v-progress-circular>
         </v-col>
 
         <v-col lg="3" :sm="12">
@@ -782,7 +783,7 @@ export default {
     // comment
     dialog: {},
     Newslength: 0,
-    DataComment: [],
+    DataComment: [{}],
     SelectedItemIndex: 0,
     cate: ["ALL", "Video", "Music", "Life", "Social"],
 
@@ -1177,7 +1178,6 @@ export default {
   created() {
     this.getApi();
     this.colorDark();
-    this.SelectedItems = this.items;
   },
   computed: {
     api() {

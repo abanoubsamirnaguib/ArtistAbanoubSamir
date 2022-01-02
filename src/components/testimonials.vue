@@ -13,7 +13,7 @@
         </v-col>
       </v-row>
 
-      <v-row>
+      <v-row v-if="items.length > 1">
         <v-col cols="12">
           <div class="sign">
             <v-card-title
@@ -56,7 +56,7 @@
                     <v-row style="height: 300px; width: 600px" class="cardRow">
                       <!-- <div class="d-flex flex-no-wrap justify-space-between" style="height:100%;"> -->
                       <v-col cols="6" style="padding: 0px; height: 300px">
-                        <v-img :src="item.src" aspect-ratio="1.5" class="image">
+                        <v-img :src="item.src" aspect-ratio="1" class="image">
                         </v-img>
                         <div class="circle"  :style="{ backgroundColor: switch1 ? 'white' : color.color1 }" ></div>
                       </v-col>
@@ -122,7 +122,7 @@
           </v-carousel>
         </v-col>
       </v-row>
-      <v-row style="width: 100%; overflow: overlay">
+      <v-row style="width: 100%; overflow: overlay" v-if="items.length > 1">
         <v-col cols="12" class="d-flex overflow-scroll justify-lg-center">
           <div
             :class="select == i ? 'selected' : 'bg-dark'"
@@ -140,6 +140,15 @@
           </div>
         </v-col>
       </v-row>
+
+                <v-progress-circular
+            v-if="(items.length == 1)"
+            :size="200"
+            :width="10"
+            color="red "
+            class="mt-4"
+            indeterminate
+          ></v-progress-circular>
     </v-container>
     <Message />
   </v-app>
@@ -153,73 +162,73 @@ export default {
   name: "News",
   data: () => ({
     select: 0,
-    items: [
-      {
-        color: "#1F7087",
-        src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-        name: "Supermodel",
-        job: "Foster the People",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 256 },
-        share: { link: "https://www.facebook.com/", number: 35, bol: false },
-        category: "Life",
-      },
-      {
-        color: "#1F7087",
-        src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-        name: "Supermodel",
-        job: "Foster the People",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 256 },
-        share: { link: "https://www.facebook.com/", number: 35, bol: false },
-        category: "Life",
-      },
-      {
-        color: "#1F7087",
-        src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-        name: "Supermodel",
-        job: "Foster the People",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 256 },
-        share: { link: "https://www.facebook.com/", number: 35, bol: false },
-        category: "Life",
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        name: "Halcyon Days",
-        job: "Ellie Goulding",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 250 },
-        share: { link: "https://www.facebook.com/", number: 45, bol: false },
-        category: "Music",
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        name: "Halcyon Days 2",
-        job: "Ellie Goulding 2",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 250 },
-        share: { link: "https://www.facebook.com/", number: 45, bol: false },
-        category: "Video",
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        name: "Halcyon Days Social",
-        job: "Ellie Goulding",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 250 },
-        share: { link: "https://www.facebook.com/", number: 45, bol: false },
-        category: "Social",
-      },
+    items: [{}
+      // {
+      //   color: "#1F7087",
+      //   src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
+      //   name: "Supermodel",
+      //   job: "Foster the People",
+      //   description:
+      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+      //   likes: { bol: false, number: 256 },
+      //   share: { link: "https://www.facebook.com/", number: 35, bol: false },
+      //   category: "Life",
+      // },
+      // {
+      //   color: "#1F7087",
+      //   src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
+      //   name: "Supermodel",
+      //   job: "Foster the People",
+      //   description:
+      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+      //   likes: { bol: false, number: 256 },
+      //   share: { link: "https://www.facebook.com/", number: 35, bol: false },
+      //   category: "Life",
+      // },
+      // {
+      //   color: "#1F7087",
+      //   src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
+      //   name: "Supermodel",
+      //   job: "Foster the People",
+      //   description:
+      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+      //   likes: { bol: false, number: 256 },
+      //   share: { link: "https://www.facebook.com/", number: 35, bol: false },
+      //   category: "Life",
+      // },
+      // {
+      //   color: "#952175",
+      //   src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+      //   name: "Halcyon Days",
+      //   job: "Ellie Goulding",
+      //   description:
+      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+      //   likes: { bol: false, number: 250 },
+      //   share: { link: "https://www.facebook.com/", number: 45, bol: false },
+      //   category: "Music",
+      // },
+      // {
+      //   color: "#952175",
+      //   src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+      //   name: "Halcyon Days 2",
+      //   job: "Ellie Goulding 2",
+      //   description:
+      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+      //   likes: { bol: false, number: 250 },
+      //   share: { link: "https://www.facebook.com/", number: 45, bol: false },
+      //   category: "Video",
+      // },
+      // {
+      //   color: "#952175",
+      //   src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+      //   name: "Halcyon Days Social",
+      //   job: "Ellie Goulding",
+      //   description:
+      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+      //   likes: { bol: false, number: 250 },
+      //   share: { link: "https://www.facebook.com/", number: 45, bol: false },
+      //   category: "Social",
+      // },
     ],
     switch1: false,
   }),

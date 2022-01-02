@@ -157,7 +157,7 @@
                   Description :
                 </v-card-title>
                 <v-card-title
-                  class="text-subtitle-3 pa-3 ma-0 text-left"
+                  class="text-subtitle-3 pa-3 ma-0 text-left text-break"
                   v-html="info.Description"
                 >
                 </v-card-title>
