@@ -6,6 +6,7 @@ import AboutMe from '../components/aboutMe.vue'
 import ContactMe from '../components/ContactMe.vue'
 import news from '../components/news.vue'
 import testimonials from '../components/testimonials.vue'
+import photos from '../components/photos.vue'
 
 Vue.use(VueRouter)
 
@@ -46,7 +47,8 @@ const routes = [
   {
     path: '/photos',
     name: 'photos',
-    component: () => import(/* webpackChunkName: "about" */ '../components/photos.vue'),
+    component: photos ,
+    // component: () => import(/* webpackChunkName: "about" */ '../components/photos.vue'),
         meta: {
       title: 'Music || Photos'
     }

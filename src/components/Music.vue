@@ -1284,6 +1284,9 @@ export default {
       this.switch1 = this.$store.state.switch;
     },
   },
+  destroyed(){
+this.audio.pause();
+  }
 };
 </script>
 <style lang="scss" scoped>
