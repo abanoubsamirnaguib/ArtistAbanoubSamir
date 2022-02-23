@@ -65,8 +65,8 @@
                         <v-row>
                           <v-col cols="12" style="max-height: 15vh">
                             <v-card-title
-                              class="text-h5 font-weight-black"
-                              style="word-break: keep-all"
+                              class="text-h5 font-weight-black "
+                              style="word-break: keep-all ; text-transform: capitalize;"
                               v-text="item.name"
                             ></v-card-title>
                             <v-card-subtitle
