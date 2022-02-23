@@ -70,7 +70,7 @@
                               v-text="item.name"
                             ></v-card-title>
                             <v-card-subtitle
-                              class="font-italic"
+                              class="font-italic text-capitalize"
                               v-text="item.job"
                             ></v-card-subtitle>
                           </v-col>
