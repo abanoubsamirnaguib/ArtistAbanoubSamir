@@ -9,6 +9,7 @@ module.exports = function (options, Callback) {
         part: "snippet",
         playlistId: "PLjs6IhHA5vjDC5YiH7vwnudq5dpv9j_n8",
         key: "AIzaSyDdK82uTv5IFGcMN9n1qSLRumzLf1z_i9U",
+        maxResults:50,
     };
 
     var yt = [];
