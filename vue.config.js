@@ -4,7 +4,7 @@ const paths = [
   {
     path: '/',
     lastmod: new Date().toISOString().slice(0, 10),
-    priority: '0.8',
+    priority: 0.8,
     changefreq: 'hourly'
   },
 ];
@@ -34,7 +34,7 @@ module.exports = {
           filename: 'sitemap.xml',
           lastmod: true,
           changefreq: 'hourly',
-          priority: '0.8'
+          priority: 0.8,
         }
       })
     ]
