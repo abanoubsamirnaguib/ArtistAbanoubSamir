@@ -89,6 +89,8 @@ const routes = [
       title: 'Music ||  Not Found Page'
     }
   },
+
+
   // {
   //   path: '/about',
   //   name: 'About',
