@@ -2,7 +2,19 @@
 const SitemapPlugin = require('sitemap-webpack-plugin').default;
 const paths = [
   {
-    path: '/',
+    path: '/ArtistAbanoubSamir/',
+    lastmod: new Date().toISOString().slice(0, 10),
+    priority: 0.8,
+    changefreq: 'hourly'
+  },
+  {
+    path: '/ArtistAbanoubSamir/AboutMe/',
+    lastmod: new Date().toISOString().slice(0, 10),
+    priority: 0.8,
+    changefreq: 'hourly'
+  },
+  {
+    path: '/ArtistAbanoubSamir/Home/',
     lastmod: new Date().toISOString().slice(0, 10),
     priority: 0.8,
     changefreq: 'hourly'
