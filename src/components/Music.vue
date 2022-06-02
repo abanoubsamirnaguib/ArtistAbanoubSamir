@@ -448,11 +448,21 @@
                 <div class="player-cover">
                   <transition-group :name="transitionName">
                     <div v-for="(track, i) in tracks" :key="i">
-                      <div
+                      <!-- <div
                         class="player-cover__item"
                         v-if="i === currentTrackIndex"
                         :style="{ backgroundImage: `url(${track.cover})` }"
+                      ></div> -->
+                      
+                      <!-- initial cover  -->
+                      <div
+                        class="player-cover__item"
+                        v-if="i !== currentTrackIndex"
+                        :style="{
+                          backgroundImage: `url(${tracks[currentTrackIndex].cover})`,
+                        }"
                       ></div>
+                      <!-- initial cover  -->
                     </div>
                   </transition-group>
                 </div>
@@ -466,7 +476,11 @@
                       <use xlink:href="#icon-heart-o"></use>
                     </svg>
                   </div>
-                  <b class="text-title" :style="{ color: switch1 ? '' : color.color4 }" >{{ currentTrack.likes.number }}</b>
+                  <b
+                    class="text-title"
+                    :style="{ color: switch1 ? '' : color.color4 }"
+                    >{{ currentTrack.likes.number }}</b
+                  >
                   <a
                     :class="{ activeLink: currentTrack.share.bol }"
                     :href="currentTrack.url"
@@ -478,7 +492,11 @@
                       <use xlink:href="#icon-link"></use>
                     </svg>
                   </a>
-                  <b class="text-title" :style="{ color: switch1 ? '' : color.color4 }" >{{ currentTrack.share.number }}</b>
+                  <b
+                    class="text-title"
+                    :style="{ color: switch1 ? '' : color.color4 }"
+                    >{{ currentTrack.share.number }}</b
+                  >
 
                   <div class="player-controls__item" @click="prevTrack">
                     <svg class="icon">
@@ -693,7 +711,7 @@
             </defs>
           </svg>
 
-                    <v-snackbar v-model="snackbar" :timeout="2000">
+          <v-snackbar v-model="snackbar" :timeout="2000">
             {{ resp }}
             <template v-slot:action="{ attrs }">
               <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
@@ -882,6 +900,11 @@ export default {
       this.currentTrack = this.tracks[this.currentTrackIndex];
       this.resetPlayer();
       this.$refs.mycarousel.goSlide(this.currentTrackIndex);
+
+      this.$router.replace({
+        name: "my-work",
+        params: { id: this.currentTrackIndex },
+      });
     },
     nextTrack() {
       this.transitionName = "scale-out";
@@ -894,6 +917,11 @@ export default {
       this.currentTrack = this.tracks[this.currentTrackIndex];
       this.resetPlayer();
       this.$refs.mycarousel.goSlide(this.currentTrackIndex);
+
+      this.$router.replace({
+        name: "my-work",
+        params: { id: this.currentTrackIndex },
+      });
     },
     resetPlayer() {
       this.barWidth = 0;
@@ -917,15 +945,15 @@ export default {
         // ADD TO BACKEND
         const axios = require("axios");
         let base_url =
-        //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/addLike/${this.tracks[i].id}`;
-         `http://asmusicbackend-07251.herokuapp.com/public/api/Music/addLike/${this.tracks[i].id}`;
+          //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/addLike/${this.tracks[i].id}`;
+          `http://asmusicbackend-07251.herokuapp.com/public/api/Music/addLike/${this.tracks[i].id}`;
         axios.get(base_url);
       } else {
         this.tracks[i].likes.number--;
         const axios = require("axios");
         let base_url =
-        //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/subLike/${this.tracks[i].id}`;
-         `http://asmusicbackend-07251.herokuapp.com/public/api/Music/subLike/${this.tracks[i].id}`;
+          //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/subLike/${this.tracks[i].id}`;
+          `http://asmusicbackend-07251.herokuapp.com/public/api/Music/subLike/${this.tracks[i].id}`;
         axios.get(base_url);
       }
       localStorage.setItem(
@@ -939,8 +967,8 @@ export default {
         this.tracks[i].share.number++;
         const axios = require("axios");
         let base_url =
-        //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/addShare/${this.tracks[i].id}`;
-         `http://asmusicbackend-07251.herokuapp.com/public/api/Music/addShare/${this.tracks[i].id}`;
+          //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/addShare/${this.tracks[i].id}`;
+          `http://asmusicbackend-07251.herokuapp.com/public/api/Music/addShare/${this.tracks[i].id}`;
         axios.get(base_url);
       }
       localStorage.setItem(
@@ -953,6 +981,7 @@ export default {
       this.isShowCover = false;
       this.currentTrackIndex = i;
       this.currentTrack = this.tracks[this.currentTrackIndex];
+      this.$router.replace({ name: "my-work", params: { id: i } });
       this.$refs.mycarousel.goSlide(i);
       this.resetPlayer();
       this.reserve();
@@ -1026,9 +1055,9 @@ export default {
       });
       //api
       const axios = require("axios");
-      let base_url = 
-      // `http://192.168.1.10/music%20project/music%20project/public/api/comments/addMusicComment`;
-      `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addMusicComment`;
+      let base_url =
+        // `http://192.168.1.10/music%20project/music%20project/public/api/comments/addMusicComment`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addMusicComment`;
       axios
         .post(base_url, {
           name: this.name,
@@ -1086,8 +1115,8 @@ export default {
       //api
       const axios = require("axios");
       let base_url =
-      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/editMusicComment/${this.comments[p].id}`;
-       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editMusicComment/${this.comments[p].id}`;
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/editMusicComment/${this.comments[p].id}`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editMusicComment/${this.comments[p].id}`;
       axios
         .post(base_url, {
           name: this.Editname,
@@ -1130,8 +1159,8 @@ export default {
       console.log(n);
       const axios = require("axios");
       let base_url =
-      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteMusicComment/${this.comments[p].id}`;
-       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteMusicComment/${this.comments[p].id}`;
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteMusicComment/${this.comments[p].id}`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteMusicComment/${this.comments[p].id}`;
       axios.post(base_url).then((response) => {
         this.resp = response.data.Success;
         this.snackbar = true;
@@ -1189,8 +1218,19 @@ export default {
       .then((response) => {
         var Data = response.data.data;
         this.tracks = Data;
-        this.currentTrackIndex = 0;
-        this.currentTrack = this.tracks[this.currentTrackIndex];
+
+        if (
+          this.$route.params.id > 0 &&
+          this.$route.params.id <= this.tracks.length - 1
+        ) {
+          this.currentTrackIndex = this.$route.params.id;
+          this.currentTrack = this.tracks[this.currentTrackIndex];
+        } else {
+          this.currentTrack = this.tracks[0];
+        }
+
+        // this.currentTrackIndex = 0;
+        // this.currentTrack = this.tracks[this.currentTrackIndex];
         this.resetPlayer();
         // console.log(this.tracks);
         // get likes&share&comments from localStorage
@@ -1222,7 +1262,8 @@ export default {
   },
   created() {
     let vm = this;
-    this.currentTrack = this.tracks[0];
+    this.currentTrack = this.tracks[this.currentTrackIndex];
+    // this.currentTrack = this.tracks[0];
     this.audio = new Audio();
     this.audio.src = this.currentTrack.source;
     this.audio.ontimeupdate = function () {
@@ -1284,9 +1325,9 @@ export default {
       this.switch1 = this.$store.state.switch;
     },
   },
-  destroyed(){
-this.audio.pause();
-  }
+  destroyed() {
+    this.audio.pause();
+  },
 };
 </script>
 <style lang="scss" scoped>

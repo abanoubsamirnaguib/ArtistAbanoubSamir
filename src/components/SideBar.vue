@@ -107,7 +107,7 @@ export default {
       { icon: "fas fa-satellite-dish", text: "Home", route: "Home" },
       { icon: "fas fa-stream", text: "About ME", route: "AboutMe" },
       { icon: "fas fa-user", text: "Contact Me", route: "ContactMe" },
-      { icon: "fas fa-chart-pie", text: "My Last Works", route: "MyWorks" },
+      { icon: "fas fa-chart-pie", text: "My Last Works", route: "MyWorks/0" },
     ],
     collections: [
       { icon: "fas fa-image", text: "photos", route: "/photos" },

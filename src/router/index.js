@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Music from '../components/Music.vue'
+// import Test1 from '../components/test1.vue'
 import AboutMe from '../components/aboutMe.vue'
 import ContactMe from '../components/ContactMe.vue'
 import news from '../components/news.vue'
@@ -21,13 +22,32 @@ const routes = [
     }
   },
   {
-    path: '/MyWorks',
+    path: '/MyWorks/:id',
     name: 'my-work',
     component: Music ,
     meta: {
       title: 'Music || Music Track'
     }
   },
+ 
+ 
+  // {
+  //   path: '/MyWorks1',
+  //   name: 'my-work1',
+  //   component: Test1,
+  //   meta: {
+  //     title: 'Music || Music test1'
+  //   }
+  // },
+  // {
+  //   path: '/MyWorks1/:id',
+  //   name: 'my-work2',
+  //   component: Test1,
+  //   meta: {
+  //     title: 'Music || Music test1'
+  //   }
+  // },
+ 
   {
     path: '/AboutMe',
     name: 'aboutme',
@@ -52,7 +72,6 @@ const routes = [
         meta: {
       title: 'Music || Photos'
     }
-  
   },
   {
     path: '/Videos',
