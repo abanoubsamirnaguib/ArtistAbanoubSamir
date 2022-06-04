@@ -22,29 +22,18 @@
           >
             Videos Gallary
           </h3>
-          <v-toolbar
-            dark
-            :color="switch1 ? color.color2 : color.color2"
-            style="border-radius: 25px"
-          >
-            <v-toolbar-title>videos selection</v-toolbar-title>
-            <v-autocomplete
-              v-model="select"
-              :loading="loading"
-              :items="items"
-              :search-input.sync="search"
-              cache-items
-              class="mx-4"
-              flat
-              hide-no-data
-              hide-details
-              label="which video do you looking for?"
-              solo-inverted
-            ></v-autocomplete>
-            <v-btn icon @click="select = null">
-              <v-icon>mdi-trash-can</v-icon>
-            </v-btn>
-          </v-toolbar>
+          <search
+            :toolbarColor="switch1 ? color.color2 : color.color2"
+            toolbarTitle="videos selection"
+            inputColor=""
+            itemColor=""
+            :light="false"
+            :data="videos"
+            :states="states"
+            @selectionAdded="GetSearchIndex"
+            @reset="resetSelect"
+          />
+
         </v-col>
       </v-row>
 
@@ -291,10 +280,10 @@
                                 commentContent
                               "
                               :style="{
-                              backgroundColor: switch1
-                                ? '#f1f1f1'
-                                : color.color2,
-                            }"
+                                backgroundColor: switch1
+                                  ? '#f1f1f1'
+                                  : color.color2,
+                              }"
                             >
                               {{ comment.message }}
 
@@ -469,7 +458,7 @@
               <v-col cols="12" sm="8" md="6">
                 <v-card>
                   <v-toolbar
-                     :color="switch1 ? color.color3 : color.color2"
+                    :color="switch1 ? color.color3 : color.color2"
                     dark
                     bottom
                     extension-height
@@ -479,7 +468,7 @@
                     v-model="title.snackbar"
                   >
                     <v-toolbar-title class="ma-auto text-h6">
-                      {{ search || title.text }}
+                      {{ select || title.text }}
                     </v-toolbar-title>
                   </v-toolbar>
                 </v-card>
@@ -682,10 +671,10 @@
                                 commentContent
                               "
                               :style="{
-                              backgroundColor: switch1
-                                ? '#f1f1f1'
-                                : color.color2,
-                            }"
+                                backgroundColor: switch1
+                                  ? '#f1f1f1'
+                                  : color.color2,
+                              }"
                             >
                               {{ comment.message }}
 
@@ -832,17 +821,17 @@
           </div>
         </v-col>
       </v-row>
-        <v-snackbar v-model="snackbar1" :timeout="2000">
-          {{ resp }}
-          <template v-slot:action="{ attrs }">
-            <v-btn color="blue" text v-bind="attrs" @click="snackbar1 = false">
-              Close
-            </v-btn>
-          </template>
-        </v-snackbar>
+      <v-snackbar v-model="snackbar1" :timeout="2000">
+        {{ resp }}
+        <template v-slot:action="{ attrs }">
+          <v-btn color="blue" text v-bind="attrs" @click="snackbar1 = false">
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-container>
     <Message />
-     <!-- <h1 style="color:white">{{ resp }}</h1> -->
+    <!-- <h1 style="color:white">{{ resp }}</h1> -->
     <!-- {{ videos }} -->
     <!-- {{ snackbar1 }} -->
   </v-app>
@@ -852,6 +841,8 @@
 import ButtonsSocial from "./ButtonsSocial.vue";
 import "vue-cool-lightbox/dist/vue-cool-lightbox.min.css";
 import { Carousel3d, Slide } from "vue-carousel-3d";
+import search from "../components/subComment/search";
+
 import Message from "../components/message";
 // import videosjson from "./videos.json";
 import yt from "./yt.js";
@@ -884,11 +875,9 @@ export default {
     ],
 
     // search
-    loading: false,
-    items: [],
-    search: null,
     select: null,
     states: [],
+    // selectedVideo:null,
     selectedVideo: [
       {
         description: "The first Blender Open Movie from 2006",
@@ -925,12 +914,15 @@ export default {
     Carousel3d,
     Slide,
     Message,
+    search,
   },
 
   created() {
     yt({ apiKey: "AIzaSyDdK82uTv5IFGcMN9n1qSLRumzLf1z_i9U" }, (response) => {
       this.videos = [];
-      this.videos = response;
+      this.videos = response.filter((video) => {
+        return video.title != "Deleted video";
+      });
       // console.log(this.videos);
       for (let n = 0; n < this.videos.length; n++) {
         this.states[n] = this.videos[n].title;
@@ -968,16 +960,19 @@ export default {
     this.colorDark();
   },
   methods: {
-    querySelections(v) {
-      this.loading = true;
-      // Simulated ajax query
-      setTimeout(() => {
-        this.items = this.states.filter((e) => {
-          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
-        });
-        this.loading = false;
-      }, 500);
+    // search
+    GetSearchIndex(index, select) {
+      this.ii = index;
+      this.selectedVideo[0] = this.videos[this.ii];
+      this.select = select;
+      this.title.text = select;
+      // console.log(this.selectedVideo, this.select);
     },
+    resetSelect(select) {
+      this.select = select;
+      this.title.text = this.states[0];
+    },
+
     onAfterSlideChange(index) {
       // console.log(
       //   "@onBeforeSlideChange Callback Triggered",
@@ -1028,8 +1023,8 @@ export default {
       //api
       const axios = require("axios");
       let base_url =
-      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/addVideoComment`;
-       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addVideoComment`;
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/addVideoComment`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addVideoComment`;
       axios
         .post(base_url, {
           name: this.name,
@@ -1088,8 +1083,8 @@ export default {
       //api
       const axios = require("axios");
       let base_url =
-      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/editVideoComment/${this.videos[n].comments[p].id}`;
-       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editVideoComment/${this.videos[n].comments[p].id}`;
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/editVideoComment/${this.videos[n].comments[p].id}`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editVideoComment/${this.videos[n].comments[p].id}`;
       axios
         .post(base_url, {
           name: this.Editname,
@@ -1135,8 +1130,8 @@ export default {
       // api
       const axios = require("axios");
       let base_url =
-      //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteVideoComment/${this.videos[n].comments[p].id}`;
-       `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteVideoComment/${this.videos[n].comments[p].id}`;
+        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteVideoComment/${this.videos[n].comments[p].id}`;
+        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteVideoComment/${this.videos[n].comments[p].id}`;
       axios.post(base_url).then((response) => {
         this.resp = response.data.Success;
         this.snackbar1 = true;
@@ -1188,18 +1183,6 @@ export default {
     },
   },
   watch: {
-    search(val) {
-      val && val !== this.select && this.querySelections(val);
-      if (this.select) {
-        this.selectedVideo = this.videos.filter((e, index) => {
-          if (e.title == this.select) {
-            this.ii = index;
-          }
-          return e.title == this.select;
-        });
-        // console.log(this.ii);
-      }
-    },
     color() {
       this.switch1 = this.$store.state.switch;
     },

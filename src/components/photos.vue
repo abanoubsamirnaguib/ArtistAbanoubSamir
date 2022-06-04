@@ -21,7 +21,19 @@
           >
             Photos Gallary
           </h3>
-          <v-toolbar
+                    <search
+            :toolbarColor="switch1 ? color.color3 : color.color2"
+            toolbarTitle="Photos selection"
+            inputColor=""
+            itemColor=""
+            :light="false"
+            :data="photos"
+            :states="states"
+            @selectionAdded="GetSearchIndex"
+            @reset="resetSelect"
+          />
+
+          <!-- <v-toolbar
             dark
             :color="switch1 ? color.color3 : color.color2"
             style="border-radius: 25px"
@@ -43,7 +55,7 @@
             <v-btn icon @click="select = null">
               <v-icon>mdi-trash-can</v-icon>
             </v-btn>
-          </v-toolbar>
+          </v-toolbar> -->
         </v-col>
       </v-row>
 
@@ -831,6 +843,7 @@
 
 <script>
 import ButtonsSocial from "../components/ButtonsSocial.vue";
+import search from "../components/subComment/search";
 import Message from "../components/message";
 import "vue-cool-lightbox/dist/vue-cool-lightbox.min.css";
 import IG from "./IG.js";
@@ -897,6 +910,7 @@ export default {
     ButtonsSocial,
     CoolLightBox,
     Message,
+     search
   },
   created() {
     // IG
@@ -954,15 +968,14 @@ export default {
   },
   mounted() {},
   methods: {
-    querySelections(v) {
-      this.loading = true;
-      // Simulated ajax query
-      setTimeout(() => {
-        this.items = this.states.filter((e) => {
-          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
-        });
-        this.loading = false;
-      }, 500);
+    GetSearchIndex(index, select) {
+      this.ii = index;
+      this.selectedPhoto[0] = this.photos[this.ii];
+      this.select = select;
+      // console.log(this.selectedVideo, this.select);
+    },
+    resetSelect(select) {
+      this.select = select;
     },
     submitComment(n) {
       this.photos[n].comments.push({
@@ -1141,18 +1154,7 @@ export default {
     },
   },
   watch: {
-    search(val) {
-      val && val !== this.select && this.querySelections(val);
-      if (this.select) {
-        this.selectedPhoto = this.photos.filter((e, index) => {
-          if (e.title == this.select) {
-            this.ii = index;
-          }
-          return e.title == this.select;
-        });
-        // console.log(this.selectedPhoto);
-      }
-    },
+
     color() {
       this.switch1 = this.$store.state.switch;
     },

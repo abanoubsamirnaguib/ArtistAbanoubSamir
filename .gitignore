@@ -23,4 +23,4 @@ pnpm-debug.log*
 *.sw?
 
 src/components/test1.vue
-src/components/subComment
+# src/components/subComment

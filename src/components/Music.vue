@@ -14,32 +14,17 @@
           <v-app-bar color="rgba(0,0,0,0)" flat class="mt-4">
             <div class="v-toolbar__content">
               <v-col cols="12" sm="6">
-                <v-toolbar dark color="#eef3f7" style="border-radius: 25px">
-                  <v-autocomplete
-                    v-model="select"
-                    :loading="SearchLoading"
-                    :items="items"
-                    :search-input.sync="search"
-                    cache-items
-                    class="mx-4"
-                    flat
-                    light
-                    color="green"
-                    item-color="orange lighten-0"
-                    dense
-                    :full-width="true"
-                    :solo="true"
-                    :disable-lookup="false"
-                    hide-no-data
-                    hide-details
-                    label="Search..."
-                    solo-inverted
-                    prepend-inner-icon="mdi-magnify"
-                  ></v-autocomplete>
-                  <v-btn icon @click="select = null">
-                    <v-icon color="black">mdi-trash-can</v-icon>
-                  </v-btn>
-                </v-toolbar>
+                <search
+                  toolbarColor="#eef3f7"
+                  toolbar-title=""
+                  inputColor="green"
+                  itemColor="orange lighten-0"
+                  :light="true"
+                  :data="tracks"
+                  :states="states"
+                  @selectionAdded="GetSearchIndex"
+                  @reset="resetSelect"
+                />
               </v-col>
             </div>
           </v-app-bar>
@@ -453,7 +438,7 @@
                         v-if="i === currentTrackIndex"
                         :style="{ backgroundImage: `url(${track.cover})` }"
                       ></div> -->
-                      
+
                       <!-- initial cover  -->
                       <div
                         class="player-cover__item"
@@ -746,6 +731,7 @@
 <script>
 import ButtonsSocial from "./ButtonsSocial.vue";
 import { Carousel3d, Slide } from "vue-carousel-3d";
+import search from "../components/subComment/search";
 import Message from "../components/message";
 
 export default {
@@ -787,12 +773,7 @@ export default {
     rating: 4.5,
     model: 1,
     // search
-    items: [],
-    search: null,
-    select: null,
     states: [],
-    selectedTrack: [],
-    SearchLoading: false,
     //comment
     DataComment: [],
     trackslength: 0,
@@ -827,6 +808,7 @@ export default {
     Slide,
     ButtonsSocial,
     Message,
+    search,
   },
 
   methods: {
@@ -997,17 +979,12 @@ export default {
       setTimeout(() => (this.loading = false), 1000);
     },
     // search
-    querySelections(v) {
-      this.SearchLoading = true;
-      // Simulated ajax query
-      setTimeout(() => {
-        this.items = this.states.filter((e) => {
-          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
-        });
-        this.SearchLoading = false;
-      }, 500);
+    GetSearchIndex(e) {
+      this.playlist(e);
     },
-
+    resetSelect(select) {
+      this.select = select;
+    },
     // components
     getComets() {
       const axios = require("axios");
@@ -1304,18 +1281,6 @@ export default {
     },
   },
   watch: {
-    search(val) {
-      val && val !== this.select && this.querySelections(val);
-      if (this.select) {
-        this.currentTrack[0] = this.tracks.filter((e, index) => {
-          if (e.title == this.select) {
-            this.playlist(index);
-          }
-          return e.title == this.select;
-        });
-        // console.log(this.currentTrack);
-      }
-    },
     tracks() {
       this.trackslength = this.tracks.length;
       this.getComets();

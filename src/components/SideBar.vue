@@ -104,9 +104,9 @@ export default {
     mini: false,
     // temporary,
     items: [
-      { icon: "fas fa-satellite-dish", text: "Home", route: "Home" },
-      { icon: "fas fa-stream", text: "About ME", route: "AboutMe" },
-      { icon: "fas fa-user", text: "Contact Me", route: "ContactMe" },
+      { icon: "fas fa-satellite-dish", text: "Home", route: "/Home" },
+      { icon: "fas fa-stream", text: "About ME", route: "/AboutMe" },
+      { icon: "fas fa-user", text: "Contact Me", route: "/ContactMe" },
       { icon: "fas fa-chart-pie", text: "My Last Works", route: "MyWorks/0" },
     ],
     collections: [
