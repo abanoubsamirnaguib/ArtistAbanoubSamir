@@ -18,7 +18,7 @@
 import SideBar from "./components/SideBar.vue";
 
 export default {
-  name: "Home2",
+  name: "App",
   data: () => ({}),
 
   components: {
@@ -27,6 +27,9 @@ export default {
   created() {
     // console.log(this.$router.currentRoute.path);
     // console.log(this.$vuetify);
+    
+    // Call Apis
+    console.log(this.$store.state.switch);
   },
   watch: {
     $route(to) {

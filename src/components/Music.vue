@@ -466,9 +466,9 @@
                     :style="{ color: switch1 ? '' : color.color4 }"
                     >{{ currentTrack.likes.number }}</b
                   >
+                    <!-- :href="currentTrack.url" -->
                   <a
                     :class="{ activeLink: currentTrack.share.bol }"
-                    :href="currentTrack.url"
                     target="_blank"
                     class="player-controls__item -share"
                     @click="share(currentTrackIndex)"
@@ -477,6 +477,14 @@
                       <use xlink:href="#icon-link"></use>
                     </svg>
                   </a>
+
+                  <WebShare
+                    :shareit="shareit"
+                    @closeDialog="shareit = $event"
+                    :Title="currentTrack.title"
+                    :data="data"
+                  />
+
                   <b
                     class="text-title"
                     :style="{ color: switch1 ? '' : color.color4 }"
@@ -729,10 +737,9 @@
 </template>
 
 <script>
-import ButtonsSocial from "./ButtonsSocial.vue";
 import { Carousel3d, Slide } from "vue-carousel-3d";
 import search from "../components/subComment/search";
-import Message from "../components/message";
+import WebShare from "../components/subComment/WebShare.vue";
 
 export default {
   name: "my-work",
@@ -801,14 +808,16 @@ export default {
     volumeBtn: false,
     //dark mode
     switch1: false,
+    // shareit
+    shareit: false,
+    data: {},
   }),
 
   components: {
     Carousel3d,
     Slide,
-    ButtonsSocial,
-    Message,
     search,
+    WebShare
   },
 
   methods: {
@@ -944,19 +953,37 @@ export default {
       );
     },
     share(i) {
-      this.tracks[i].share.bol = true;
-      if (this.tracks[i].share.bol == true) {
-        this.tracks[i].share.number++;
-        const axios = require("axios");
-        let base_url =
-          //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/addShare/${this.tracks[i].id}`;
-          `http://asmusicbackend-07251.herokuapp.com/public/api/Music/addShare/${this.tracks[i].id}`;
-        axios.get(base_url);
+      // for mobilr
+      if (this.$vuetify.breakpoint.mobile) {
+        this.shareitAction(
+          "share a track ",
+          `listen to ${this.tracks[i].title}`,
+          `https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir${this.$router.currentRoute.fullPath}`
+        );
       }
-      localStorage.setItem(
-        `MusicShareOf${i}`,
-        JSON.stringify(this.tracks[i].share)
-      );
+      // for web
+      else {
+        this.data = {
+          url: `https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir${this.$router.currentRoute.fullPath}`,
+          title: this.tracks[i].title,
+          description: this.tracks[i].Description,
+          quote: this.tracks[i].artist,
+        };
+        this.shareit = true;
+      }
+      // this.tracks[i].share.bol = true;
+      // if (this.tracks[i].share.bol == true) {
+      //   this.tracks[i].share.number++;
+      //   const axios = require("axios");
+      //   let base_url =
+      //     //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/addShare/${this.tracks[i].id}`;
+      //     `http://asmusicbackend-07251.herokuapp.com/public/api/Music/addShare/${this.tracks[i].id}`;
+      //   axios.get(base_url);
+      // }
+      // localStorage.setItem(
+      //   `MusicShareOf${i}`,
+      //   JSON.stringify(this.tracks[i].share)
+      // );
     },
     playlist(i) {
       this.transitionName = "scale-in";

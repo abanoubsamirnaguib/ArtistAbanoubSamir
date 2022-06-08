@@ -143,8 +143,6 @@
 </template>
 
 <script>
-import ButtonsSocial from "../components/ButtonsSocial.vue";
-import Message from "../components/message";
 
 export default {
   name: "aboutme",
@@ -158,6 +156,7 @@ export default {
     loop2: false,
     //dark mode
     switch1: false,
+
   }),
   methods: {
     doSmth1() {
@@ -183,11 +182,10 @@ export default {
       }
     },
   },
-  created(){this.colorDark()},
-  components: {
-    ButtonsSocial,
-    Message,
+  created() {
+    this.colorDark();
   },
+  components: {},
   computed: {
     color() {
       return this.$store.state.color;

@@ -119,63 +119,16 @@
                 </v-card-title>
               </figure>
 
-              <v-dialog v-model="dialog[i]" width="600px" :retain-focus="false">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    class="justify-center comment-btn"
-                    :color="switch1 ? color.color3 : color.color2"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-badge
-                      :content="videos[i].comments.length || 0"
-                      :value="videos[i].comments.length || 0"
-                      :color="switch1 ? color.color1 : 'pink lighten-1'"
-                      overlap
-                    >
-                      <v-icon>mdi-comment-text</v-icon>
-                      <span class="d-none d-sm-inline">comments...</span>
-                    </v-badge>
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title
-                    :style="{
-                      backgroundColor: switch1 ? 'white' : color.color1,
-                    }"
-                  >
-                    <v-row>
-                      <v-col cols="10">
-                        <span
-                          class="text-h5"
-                          style="
-                            word-break: break-word;
-                            font-family: 'Kaushan Script', cursive !important;
-                          "
-                          :style="{ color: switch1 ? '' : color.color5 }"
-                        >
-                          Tell Me What your opinion in {{ video.title }} Video
-                        </span>
-                      </v-col>
-                      <v-col cols="2">
-                        <v-btn
-                          depressed
-                          color="error"
-                          style="
-                            min-width: 20px;
-                            position: absolute;
-                            top: 0px;
-                            right: 0px;
-                          "
-                          @click="closeDialog(i)"
-                        >
-                          x
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-                  </v-card-title>
-                  <iframe
+                <commentTemp1
+                v-if="!select"
+                type="Video"
+                :MainColor="switch1 ? color.color3 : color.color2"
+                :data="video"
+                :badgeColor="switch1 ? color.color1 : 'pink lighten-1'"
+                :Maintitle="`Tell Me What your opinion in ${video.title} Video`"
+                :index="i"
+              >
+                <iframe
                     class="video"
                     style="background-color: #212121"
                     width="100%"
@@ -185,261 +138,8 @@
                     allowfullscreen
                     :src="video.sources[0]"
                   />
+              </commentTemp1>
 
-                  <v-form
-                    ref="form1"
-                    v-model="valid"
-                    lazy-validation
-                    id="form"
-                    style="
-                      background-color: #f1f1f1;
-                      padding: 10px;
-                      border-radius: 15px;
-                    "
-                    @submit.prevent="submitComment(i, $event)"
-                  >
-                    <v-card-text class="mt-5">
-                      <div class="reply">
-                        <v-text-field
-                          tag="input"
-                          v-model.trim="name"
-                          label="Your name"
-                          :rules="rules"
-                          hide-details="auto"
-                        ></v-text-field>
-
-                        <v-text-field
-                          tag="input"
-                          v-model.trim="message"
-                          label="Your comment"
-                          :rules="rules"
-                          hide-details="auto"
-                        ></v-text-field>
-                      </div>
-                    </v-card-text>
-                    <button
-                      :disabled="name == '' || message == '' || valid == false"
-                      type="submit"
-                      class="reply--button"
-                      @click.prevent="submitComment(i, $event)"
-                    >
-                      <i class="fa fa-paper-plane"></i> Send
-                    </button>
-                  </v-form>
-
-                  <v-card
-                    width="100%"
-                    height="100%"
-                    class="overflow-auto"
-                    v-if="video.comments.length == 0"
-                  >
-                    <v-card-text
-                      :style="{
-                        backgroundColor: switch1 ? 'white' : color.color1,
-                      }"
-                    >
-                      <h3
-                        class="font-weight-black font-italic"
-                        :style="{ color: switch1 ? '' : color.color4 }"
-                      >
-                        Be The First One To Comment
-                      </h3>
-                    </v-card-text>
-                  </v-card>
-
-                  <v-card
-                    v-if="video.comments.length !== 0"
-                    :light="switch1"
-                    :dark="!switch1"
-                  >
-                    <v-card-text>
-                      <div class="font-weight-bold ml-8 mb-2">
-                        Other Comments
-                        <v-divider></v-divider>
-                      </div>
-
-                      <v-timeline align-top dense>
-                        <v-timeline-item
-                          v-for="(comment, p) in videos[i].comments"
-                          :key="p"
-                          :color="comment.color"
-                          small
-                        >
-                          <div>
-                            <div class="font-weight-normal text-left">
-                              <strong
-                                :style="{ color: switch1 ? '' : color.color5 }"
-                                style="font-family: 'Kaushan Script', cursive"
-                                >{{ comment.name.toLocaleUpperCase() }}</strong
-                              >
-                            </div>
-                            <div
-                              class="
-                                font-weight-normal
-                                text-left
-                                commentContent
-                              "
-                              :style="{
-                                backgroundColor: switch1
-                                  ? '#f1f1f1'
-                                  : color.color2,
-                              }"
-                            >
-                              {{ comment.message }}
-
-                              <!-- author -->
-                              <v-sheet
-                                v-if="comment.author"
-                                class="comment-btn"
-                                width="60px"
-                                style="position: absolute; right: 5px"
-                                color="transparent"
-                              >
-                                <!--comment.id or p -->
-                                <v-dialog
-                                  v-model="commentDialog[comment.id]"
-                                  width="600px"
-                                  :retain-focus="false"
-                                  v-if="!select"
-                                  dark
-                                  shaped
-                                >
-                                  <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                      class="justify-center"
-                                      color="blue"
-                                      dark
-                                      v-bind="attrs"
-                                      v-on="on"
-                                      small
-                                      icon
-                                      width="20"
-                                      @click.prevent="
-                                        () => {
-                                          Editname = comment.name;
-                                          Editmessage = comment.message;
-                                        }
-                                      "
-                                    >
-                                      <v-icon small>mdi-comment-edit</v-icon>
-                                    </v-btn>
-                                  </template>
-                                  <v-card style="border-radius: 15px">
-                                    <v-btn
-                                      depressed
-                                      color="error"
-                                      style="
-                                        min-width: 20px;
-                                        position: absolute;
-                                        top: 0px;
-                                        right: 0px;
-                                      "
-                                      @click="closeEditBtn(comment.id, i, p)"
-                                    >
-                                      x
-                                    </v-btn>
-                                    <v-form id="editForm" v-model="valid">
-                                      <v-card-text class="mt-5">
-                                        <div class="reply">
-                                          <input type="hidden" />
-                                          <v-text-field
-                                            tag="input"
-                                            v-model.trim="Editname"
-                                            label="Your name"
-                                            :rules="rules"
-                                            hide-details="auto"
-                                            :validate-on-blur="true"
-                                          ></v-text-field>
-                                          <v-text-field
-                                            tag="input"
-                                            v-model.trim="Editmessage"
-                                            label="Your comment"
-                                            :rules="rules"
-                                            hide-details="auto"
-                                          ></v-text-field>
-                                        </div>
-                                      </v-card-text>
-                                      <button
-                                        :disabled="
-                                          comment.name == '' ||
-                                          comment.message == '' ||
-                                          valid == false
-                                        "
-                                        type="submit"
-                                        class="reply--button mb-5"
-                                        @click.prevent="editComment(i, p)"
-                                      >
-                                        <i class="fa fa-paper-plane"></i> Send
-                                      </button>
-                                    </v-form>
-                                  </v-card>
-                                </v-dialog>
-                                <v-btn
-                                  class="justify-center"
-                                  color="red"
-                                  dark
-                                  small
-                                  icon
-                                  width="20"
-                                  @click.prevent="
-                                    () => {
-                                      snackbarDelete = true;
-                                      com = p;
-                                    }
-                                  "
-                                >
-                                  <v-icon small>mdi-trash-can</v-icon>
-                                </v-btn>
-                                <v-snackbar
-                                  v-model="snackbarDelete"
-                                  :vertical="vertical"
-                                  shaped
-                                  centered
-                                  :timeout="-1"
-                                >
-                                  Do You Want To Delete Your Comment
-
-                                  <template v-slot:action="{ attrs }">
-                                    <v-btn
-                                      color="pink"
-                                      text
-                                      v-bind="attrs"
-                                      @click="deleteComment(i, com)"
-                                    >
-                                      Yes
-                                    </v-btn>
-                                    <v-btn
-                                      color="pink"
-                                      text
-                                      v-bind="attrs"
-                                      @click="snackbarDelete = false"
-                                    >
-                                      No
-                                    </v-btn>
-                                  </template>
-                                </v-snackbar>
-                              </v-sheet>
-                            </div>
-                          </div>
-                        </v-timeline-item>
-                      </v-timeline>
-                    </v-card-text>
-                    <v-snackbar v-model="snackbar1" :timeout="2000">
-                      {{ resp }}
-                      <template v-slot:action="{ attrs }">
-                        <v-btn
-                          color="blue"
-                          text
-                          v-bind="attrs"
-                          @click="snackbar1 = false"
-                        >
-                          Close
-                        </v-btn>
-                      </template>
-                    </v-snackbar>
-                  </v-card>
-                </v-card>
-              </v-dialog>
             </slide>
           </carousel-3d>
 
@@ -502,321 +202,29 @@
               <v-btn text color="white">{{ selectedVideo[0].title }}</v-btn>
               <v-btn text color="white">{{ ii }}</v-btn>
             </figcaption> -->
-              <!-- comment on selected video -->
-              <v-dialog
-                v-model="dialog[ii]"
-                width="600px"
-                :retain-focus="false"
-                v-if="select"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    class="justify-center comment-btn select-comment"
-                    :color="switch1 ? color.color3 : color.color2"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-badge
-                      :content="videos[ii].comments.length || 0"
-                      :value="videos[ii].comments.length || 0"
-                      :color="switch1 ? color.color1 : 'pink lighten-1'"
-                      overlap
-                    >
-                      <v-icon>mdi-comment-text</v-icon>
-                      <span class="d-none d-sm-inline">comments...</span>
-                    </v-badge>
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title
-                    :style="{
-                      backgroundColor: switch1 ? 'white' : color.color1,
-                    }"
-                  >
-                    <v-row>
-                      <v-col cols="10">
-                        <span
-                          class="text-h5"
-                          style="
-                            word-break: break-word;
-                            font-family: 'Kaushan Script', cursive !important;
-                          "
-                          :style="{ color: switch1 ? '' : color.color5 }"
-                        >
-                          Tell Me What your opinion in
-                          {{ selectedVideo[0].title }} Video
-                        </span>
-                      </v-col>
-                      <v-col cols="2">
-                        <v-btn
-                          depressed
-                          color="error"
-                          style="
-                            min-width: 20px;
-                            position: absolute;
-                            top: 0px;
-                            right: 0px;
-                          "
-                          @click="closeDialog(ii)"
-                        >
-                          x
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-                  </v-card-title>
-                  <iframe
-                    class="video"
-                    style="background-color: #212121"
-                    width="100%"
-                    height="400"
-                    :src="selectedVideo[0].sources[0]"
-                  >
-                  </iframe>
+            <div class="select-comment">
+              <commentTemp1
+              v-if="select"
+              type="Video"
+              :MainColor="switch1 ? color.color3 : color.color2"
+              :data="selectedVideo[0]"
+              :badgeColor="switch1 ? color.color1 : 'pink lighten-1'"
+              :Maintitle="`Tell Me What your opinion in ${selectedVideo[0].title} Video`"
+              :index="ii"
+            >
+              <iframe
+                  class="video"
+                  style="background-color: #212121"
+                  width="100%"
+                  height="400"
+                  frameborder="10"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  :src="selectedVideo[0].sources[0]"
+                />
+            </commentTemp1>
+            </div>
 
-                  <v-form
-                    ref="form1"
-                    v-model="valid"
-                    lazy-validation
-                    id="form"
-                    style="
-                      background-color: #e1e1e1;
-                      padding: 10px;
-                      border-radius: 15px;
-                    "
-                    @submit.prevent="submitComment(ii, $event)"
-                  >
-                    <v-card-text class="mt-5">
-                      <div class="reply">
-                        <input type="hidden" />
-
-                        <v-text-field
-                          tag="input"
-                          v-model.trim="name"
-                          label="Your name"
-                          :rules="rules"
-                          hide-details="auto"
-                        ></v-text-field>
-
-                        <v-text-field
-                          tag="input"
-                          v-model.trim="message"
-                          label="Your comment"
-                          :rules="rules"
-                          hide-details="auto"
-                        ></v-text-field>
-                      </div>
-                    </v-card-text>
-                    <button
-                      :disabled="
-                        (name == '' && message == '') || valid == false
-                      "
-                      type="submit"
-                      class="reply--button"
-                      @click.prevent="submitComment(ii, $event)"
-                    >
-                      <i class="fa fa-paper-plane"></i> Send
-                    </button>
-                  </v-form>
-
-                  <v-card
-                    width="100%"
-                    height="100%"
-                    class="overflow-auto"
-                    v-if="selectedVideo[0].comments.length == 0"
-                  >
-                    <v-card-text
-                      :style="{
-                        backgroundColor: switch1 ? 'white' : color.color1,
-                      }"
-                    >
-                      <h3
-                        class="font-weight-black font-italic"
-                        :style="{ color: switch1 ? '' : color.color4 }"
-                      >
-                        Be The First One To Comment
-                      </h3>
-                    </v-card-text>
-                  </v-card>
-
-                  <v-card
-                    v-if="selectedVideo[0].comments.length !== 0"
-                    :light="switch1"
-                    :dark="!switch1"
-                  >
-                    <v-card-text>
-                      <div class="font-weight-bold ml-8 mb-2">
-                        Other Comments<v-divider></v-divider>
-                      </div>
-
-                      <v-timeline align-top dense>
-                        <v-timeline-item
-                          v-for="(comment, p) in videos[ii].comments"
-                          :key="p"
-                          :color="comment.color"
-                          small
-                        >
-                          <div>
-                            <div class="font-weight-normal text-left">
-                              <strong
-                                style="font-family: 'Kaushan Script', cursive"
-                                :style="{ color: switch1 ? '' : color.color5 }"
-                                >{{ comment.name.toLocaleUpperCase() }}</strong
-                              >
-                            </div>
-                            <div
-                              class="
-                                font-weight-normal
-                                text-left
-                                commentContent
-                              "
-                              :style="{
-                                backgroundColor: switch1
-                                  ? '#f1f1f1'
-                                  : color.color2,
-                              }"
-                            >
-                              {{ comment.message }}
-
-                              <!-- author -->
-                              <v-sheet
-                                v-if="comment.author"
-                                class="comment-btn"
-                                width="60px"
-                                style="position: absolute; right: 5px"
-                                color="transparent"
-                              >
-                                <!--comment.id or p -->
-                                <v-dialog
-                                  v-model="commentDialog[comment.id]"
-                                  width="600px"
-                                  :retain-focus="false"
-                                  v-if="select"
-                                  dark
-                                  shaped
-                                >
-                                  <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                      class="justify-center"
-                                      color="blue"
-                                      dark
-                                      v-bind="attrs"
-                                      v-on="on"
-                                      small
-                                      icon
-                                      width="20"
-                                      @click.prevent="
-                                        () => {
-                                          Editname = comment.name;
-                                          Editmessage = comment.message;
-                                        }
-                                      "
-                                    >
-                                      <v-icon small>mdi-comment-edit</v-icon>
-                                    </v-btn>
-                                  </template>
-                                  <v-card style="border-radius: 15px">
-                                    <v-btn
-                                      depressed
-                                      color="error"
-                                      style="
-                                        min-width: 20px;
-                                        position: absolute;
-                                        top: 0px;
-                                        right: 0px;
-                                      "
-                                      @click="closeEditBtn(comment.id, ii, p)"
-                                    >
-                                      x
-                                    </v-btn>
-                                    <v-form id="editForm" v-model="valid">
-                                      <v-card-text class="mt-5">
-                                        <div class="reply">
-                                          <input type="hidden" />
-                                          <v-text-field
-                                            tag="input"
-                                            v-model.trim="Editname"
-                                            label="Your name"
-                                            :rules="rules"
-                                            hide-details="auto"
-                                            :validate-on-blur="true"
-                                          ></v-text-field>
-                                          <v-text-field
-                                            tag="input"
-                                            v-model.trim="Editmessage"
-                                            label="Your comment"
-                                            :rules="rules"
-                                            hide-details="auto"
-                                          ></v-text-field>
-                                        </div>
-                                      </v-card-text>
-                                      <button
-                                        :disabled="
-                                          Editname == '' ||
-                                          Editmessage == '' ||
-                                          valid == false
-                                        "
-                                        type="button"
-                                        class="reply--button mb-5"
-                                        @click.prevent="editComment(ii, p)"
-                                      >
-                                        <i class="fa fa-paper-plane"></i> Send
-                                      </button>
-                                    </v-form>
-                                  </v-card>
-                                </v-dialog>
-                                <v-btn
-                                  class="justify-center"
-                                  color="red"
-                                  dark
-                                  small
-                                  icon
-                                  width="20"
-                                  @click.prevent="
-                                    () => {
-                                      snackbarDelete = true;
-                                      com = p;
-                                    }
-                                  "
-                                >
-                                  <v-icon small>mdi-trash-can</v-icon>
-                                </v-btn>
-                                <v-snackbar
-                                  v-model="snackbarDelete"
-                                  :vertical="vertical"
-                                  shaped
-                                  centered
-                                  :timeout="-1"
-                                >
-                                  Do You Want To Delete Your Comment
-                                  <template v-slot:action="{ attrs }">
-                                    <v-btn
-                                      color="pink"
-                                      text
-                                      v-bind="attrs"
-                                      @click="deleteComment(ii, com)"
-                                    >
-                                      Yes
-                                    </v-btn>
-                                    <v-btn
-                                      color="pink"
-                                      text
-                                      v-bind="attrs"
-                                      @click="snackbarDelete = false"
-                                    >
-                                      No
-                                    </v-btn>
-                                  </template>
-                                </v-snackbar>
-                              </v-sheet>
-                            </div>
-                          </div>
-                        </v-timeline-item>
-                      </v-timeline>
-                    </v-card-text>
-                  </v-card>
-                </v-card>
-              </v-dialog>
             </figure>
           </div>
         </v-col>
@@ -838,12 +246,10 @@
 </template>
 
 <script>
-import ButtonsSocial from "./ButtonsSocial.vue";
 import "vue-cool-lightbox/dist/vue-cool-lightbox.min.css";
 import { Carousel3d, Slide } from "vue-carousel-3d";
 import search from "../components/subComment/search";
-
-import Message from "../components/message";
+import commentTemp1 from "../components/subComment/commentTemp1.vue";
 // import videosjson from "./videos.json";
 import yt from "./yt.js";
 
@@ -890,11 +296,7 @@ export default {
       },
     ],
     //comment
-    name: "",
-    message: "",
-    Editname: "",
-    Editmessage: "",
-    com: "",
+   
     commentDialog: {},
     resp: "",
     snackbarDelete: false,
@@ -910,11 +312,10 @@ export default {
     switch1: false,
   }),
   components: {
-    ButtonsSocial,
     Carousel3d,
     Slide,
-    Message,
     search,
+    commentTemp1,
   },
 
   created() {
@@ -934,7 +335,7 @@ export default {
           window.localStorage.getItem(`VideoCommentsOf${n}`) !== null &&
           this.videos[n].comments
         ) {
-          var x = 0;
+          var x = 0; // local storage index
           for (let i = 0; i < this.videos[n].comments.length; i++) {
             if (
               JSON.parse(localStorage.getItem(`VideoCommentsOf${n}`))[x] &&
@@ -943,10 +344,10 @@ export default {
             ) {
               this.videos[n].comments[i].author = JSON.parse(
                 localStorage.getItem(`VideoCommentsOf${n}`)
-              )[i].author;
+              )[x].author;
               this.videos[n].comments[i].color = JSON.parse(
                 localStorage.getItem(`VideoCommentsOf${n}`)
-              )[i].author
+              )[x].author
                 ? "pink"
                 : this.videos[n].comments[i].color;
               x++;
@@ -1010,163 +411,7 @@ export default {
         );
       }
     },
-    submitComment(n) {
-      // console.log(this.videos[n].comments);
-      this.videos[n].comments.push({
-        name: this.name,
-        message: this.message,
-        Number: n,
-        color: "red",
-        author: true,
-      });
-
-      //api
-      const axios = require("axios");
-      let base_url =
-        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/addVideoComment`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addVideoComment`;
-      axios
-        .post(base_url, {
-          name: this.name,
-          message: this.message,
-          Number: n,
-          color: "green",
-        })
-        .then((response) => {
-          let Data = response.data;
-          this.resp = Data.Success;
-          this.snackbar1 = true;
-
-          var newComment = Data.data;
-          this.videos[n].comments[this.videos[n].comments.length - 1] = {
-            id: newComment.id,
-            name: newComment.name,
-            message: newComment.message,
-            Number: n,
-            color: "red",
-            author: true,
-          };
-
-          var authorCommnets = this.videos[n].comments.filter((e) => {
-            return e.author == true;
-          });
-          localStorage.setItem(
-            `VideoCommentsOf${n}`,
-            JSON.stringify(authorCommnets)
-          );
-        });
-      this.name = "";
-      this.message = "";
-
-      this.Editname = "";
-      this.Editmessage = "";
-      // this.dialog[n] = false;
-      if (this.$refs.form1.length > 0) {
-        this.$refs.form1.map((el) => {
-          el.reset();
-        });
-      } else this.$refs.form1.reset();
-      // console.log(this.videos[n].comments);
-    },
-    editComment(n, p) {
-      // console.log(
-      //   "id " + this.videos[n].comments[p].id + " n " + n + " p " + p
-      // );
-      this.videos[n].comments[p] = {
-        id: this.videos[n].comments[p].id,
-        name: this.Editname,
-        message: this.Editmessage,
-        Number: n,
-        color: this.videos[n].comments[p].color,
-        author: true,
-      };
-      //api
-      const axios = require("axios");
-      let base_url =
-        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/editVideoComment/${this.videos[n].comments[p].id}`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editVideoComment/${this.videos[n].comments[p].id}`;
-      axios
-        .post(base_url, {
-          name: this.Editname,
-          message: this.Editmessage,
-          Number: n,
-          color: "green",
-        })
-        .then((response) => {
-          let Data = response.data;
-          this.resp = Data.Success;
-          this.snackbar1 = true;
-
-          var newComment = Data.data;
-          this.videos[n].comments[p] = {
-            id: newComment.id,
-            name: newComment.name,
-            message: newComment.message,
-            Number: n,
-            color: this.videos[n].comments[p].color,
-            author: true,
-          };
-          // console.log(this.videos[n].comments[p]);
-          var authorCommnets = this.videos[n].comments.filter((e) => {
-            return e.author == true;
-          });
-
-          localStorage.setItem(
-            `VideoCommentsOf${n}`,
-            JSON.stringify(authorCommnets)
-          );
-        });
-      // console.log(this.videos[n].comments[p]);
-      this.Editname = "";
-      this.Editmessage = "";
-      this.commentDialog[this.videos[n].comments[p].id] = false;
-    },
-    deleteComment(n, p) {
-      // console.log(
-      //   "id " + this.videos[n].comments[p].id + " n " + n + " p " + p
-      // );
-      // this.videos[n].comments.shift(p);
-
-      // api
-      const axios = require("axios");
-      let base_url =
-        //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteVideoComment/${this.videos[n].comments[p].id}`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteVideoComment/${this.videos[n].comments[p].id}`;
-      axios.post(base_url).then((response) => {
-        this.resp = response.data.Success;
-        this.snackbar1 = true;
-        // console.log(Data);
-        var authorCommnets = this.videos[n].comments.filter((e) => {
-          return e.author == true;
-        });
-
-        localStorage.setItem(
-          `VideoCommentsOf${n}`,
-          JSON.stringify(authorCommnets)
-        );
-      });
-
-      this.videos[n].comments.splice(p, 1);
-      this.snackbarDelete = false;
-    },
-    closeEditBtn(id) {
-      this.commentDialog[id] = false;
-    },
-    closeDialog(n) {
-      // console.log(this.$refs.form1);
-      this.dialog[n] = false;
-      if (this.$refs.form1.length > 0) {
-        this.$refs.form1.map((el) => {
-          el.reset();
-        });
-      } else this.$refs.form1.reset();
-
-      this.name = "";
-      this.message = "";
-
-      this.Editname = "";
-      this.Editmessage = "";
-    },
+  
     colorDark() {
       this.switch1 = this.$store.state.switch;
       if (this.switch1 == true) {
@@ -1239,7 +484,7 @@ export default {
 }
 .select-comment {
   position: absolute;
-  bottom: -25px;
+  bottom: -40px;
   // top: 0px;
   right: 45%;
 }

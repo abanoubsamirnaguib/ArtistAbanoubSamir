@@ -60,7 +60,7 @@
                         </v-img>
                         <div class="circle"  :style="{ backgroundColor: switch1 ? 'white' : color.color1 }" ></div>
                       </v-col>
-                      <v-col cols="6" light style="padding: 5px; height: 300px">
+                      <v-col cols="6" light style="padding: 5px; height: 300px; ">
                         <!-- <div> -->
                         <v-row>
                           <v-col cols="12" style="max-height: 15vh">
@@ -77,7 +77,7 @@
                         </v-row>
                         <v-row
                           style="
-                            padding-left: 15px;
+                            padding:0px 10px;
                             overflow-x: hidden;
                             width: fit-content;
                           "
@@ -155,8 +155,7 @@
 </template>
 
 <script>
-import ButtonsSocial from "../components/ButtonsSocial.vue";
-import Message from "../components/message";
+
 
 export default {
   name: "News",
@@ -207,35 +206,11 @@ export default {
       //   share: { link: "https://www.facebook.com/", number: 45, bol: false },
       //   category: "Music",
       // },
-      // {
-      //   color: "#952175",
-      //   src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-      //   name: "Halcyon Days 2",
-      //   job: "Ellie Goulding 2",
-      //   description:
-      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-      //   likes: { bol: false, number: 250 },
-      //   share: { link: "https://www.facebook.com/", number: 45, bol: false },
-      //   category: "Video",
-      // },
-      // {
-      //   color: "#952175",
-      //   src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-      //   name: "Halcyon Days Social",
-      //   job: "Ellie Goulding",
-      //   description:
-      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-      //   likes: { bol: false, number: 250 },
-      //   share: { link: "https://www.facebook.com/", number: 45, bol: false },
-      //   category: "Social",
-      // },
+
     ],
     switch1: false,
   }),
-  components: {
-    ButtonsSocial,
-    Message,
-  },
+  components: {},
   created() {
     const axios = require("axios");
     var base_url =
@@ -419,7 +394,7 @@ export default {
 // scrollbar
 /* width */
 ::-webkit-scrollbar {
-  height: 15px;
+  width: 5px;
 }
 
 /* Track */

@@ -13,16 +13,16 @@
         </v-col>
       </v-row>
 
-          <v-progress-circular
-            v-if="!api"
-            :size="200"
-            :width="10"
-            color="red "
-            class="mt-4"
-            indeterminate
-          ></v-progress-circular>
+      <v-progress-circular
+        v-if="!api"
+        :size="200"
+        :width="10"
+        color="red "
+        class="mt-4"
+        indeterminate
+      ></v-progress-circular>
 
-      <v-row  v-if="api">
+      <v-row v-if="api">
         <v-col :lg="9" :sm="12">
           <v-card-title
             class="text-h5 bg-dark d-block text-center text-light rounded-3"
@@ -45,11 +45,11 @@
               <v-tab @change="cat('Life')">Events</v-tab>
               <v-tab @change="cat('Social')">Social</v-tab> -->
 
-              <v-tab >All</v-tab>
-              <v-tab >Video</v-tab>
-              <v-tab >Music</v-tab>
-              <v-tab >Events</v-tab>
-              <v-tab >Social</v-tab>
+              <v-tab>All</v-tab>
+              <v-tab>Video</v-tab>
+              <v-tab>Music</v-tab>
+              <v-tab>Events</v-tab>
+              <v-tab>Social</v-tab>
 
               <v-tabs-items
                 v-model="tabs"
@@ -70,6 +70,7 @@
                         :key="i"
                       >
                         <v-card
+                          :id="`#${item.title}`"
                           :color="switch1 ? '#fff' : color.color1"
                           :light="switch1"
                           :dark="!switch1"
@@ -156,10 +157,10 @@
                                         </span>
                                       </v-btn>
 
+                                      <!-- :href="item.share.link" -->
                                       <v-btn
                                         color="transparent"
                                         depressed
-                                        :href="item.share.link"
                                         target="_blank"
                                         @click="share(i, $event)"
                                       >
@@ -175,6 +176,7 @@
                                           {{ item.share.number }}
                                         </span>
                                       </v-btn>
+
                                       <!-- comment -->
                                       <v-dialog
                                         class="dialog"
@@ -620,6 +622,13 @@
                           </v-row>
                         </v-card>
                       </v-col>
+
+                      <WebShare
+                        :shareit="shareit"
+                        @closeDialog="closeWebShare"
+                        :Title="items[SelectedItemIndex].title"
+                        :data="data"
+                      />
                     </v-row>
                     <v-snackbar v-model="snackbar" :timeout="2000">
                       {{ resp }}
@@ -682,9 +691,7 @@
 </template>
 
 <script>
-import ButtonsSocial from "../components/ButtonsSocial.vue";
-import Message from "../components/message";
-
+import WebShare from "../components/subComment/WebShare.vue";
 export default {
   name: "News",
   data: () => ({
@@ -800,11 +807,12 @@ export default {
     snackbarDelete: false,
     vertical: true,
     switch1: false,
+
+    // shareit
+    shareit: false,
+    data: {},
   }),
-  components: {
-    ButtonsSocial,
-    Message,
-  },
+  components: { WebShare },
   beforeCreate() {
     // likes&share
     // for (let n = 0; n < this.items.length; n++) {
@@ -861,7 +869,32 @@ export default {
         JSON.stringify(this.SelectedItems[i].likes)
       );
     },
+    closeWebShare(e) {
+      this.shareit = e;
+      console.log(this.shareit);
+    },
     share(i) {
+      // for mobilr
+      if (this.$vuetify.breakpoint.mobile) {
+        this.shareitAction(
+          "share a News ",
+          `See ${this.SelectedItems[i].title}`,
+          `https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir${this.$router.currentRoute.fullPath}`
+        );
+      }
+      // for web
+      else {
+        this.shareit = true;
+       
+        this.data = {
+          url: `https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir${this.$router.currentRoute.fullPath}`,
+          title: this.SelectedItems[i].title,
+          description: this.SelectedItems[i].description,
+          quote: this.SelectedItems[i].subTitle,
+        };
+        // console.log(this.data);
+      }
+
       this.SelectedItems[i].share.bol = true;
       if (this.SelectedItems[i].share.bol == true) {
         this.items[i].share.number++;
@@ -886,6 +919,7 @@ export default {
         `NewsShareOf${i}`,
         JSON.stringify(this.SelectedItems[i].share)
       );
+      
     },
     // tabs
     // cat(value) {

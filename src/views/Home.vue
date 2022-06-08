@@ -44,7 +44,7 @@
               class="white--text "
               origin="center center"
             >
-              Music only makes me stronger', 'Music speaks to the heart in ways
+              Music only makes me stronger, Music speaks to the heart in ways
               that words cannot express.
             </p>
           </v-fade-transition>
@@ -74,8 +74,8 @@
 </template>
 
 <script>
-import ButtonsSocial from "../components/ButtonsSocial.vue";
-import Message from "../components/message"
+import ButtonsSocial from "../components/subComment/ButtonsSocial.vue";
+import Message from "../components/subComment/message.vue"
 
 
 export default {
@@ -162,7 +162,7 @@ h2:first-of-type {
   p {
     max-width: 50%;
     font-size: 23px;
-    font-family: "Caveat", cursive;
+    // font-family: "Kaushan Scripth", cursive;
     font-weight: bolder;
     color: white !important;
     word-spacing: 5px;
@@ -185,6 +185,7 @@ h2:first-of-type {
   p{
     max-width: 90%;
     font-size: 25px;
+    margin-top: 50px;
   }
 }
 }

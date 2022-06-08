@@ -89,7 +89,8 @@
         }
       "
     >
-      <v-icon>mdi-view-dashboard</v-icon>
+      <!-- <v-icon>mdi-view-dashboard</v-icon> -->
+      <v-icon >mdi mdi-format-list-bulleted</v-icon>
     </v-btn>
   </v-sheet>
 </template>
@@ -103,11 +104,11 @@ export default {
     drawer: null,
     mini: false,
     // temporary,
-    items: [
+    items:[
       { icon: "fas fa-satellite-dish", text: "Home", route: "/Home" },
       { icon: "fas fa-stream", text: "About ME", route: "/AboutMe" },
       { icon: "fas fa-user", text: "Contact Me", route: "/ContactMe" },
-      { icon: "fas fa-chart-pie", text: "My Last Works", route: "MyWorks/0" },
+      { icon: "fas fa-chart-pie", text: "My Music Tracks", route: "/MyWorks/0" },
     ],
     collections: [
       { icon: "fas fa-image", text: "photos", route: "/photos" },

@@ -266,8 +266,7 @@
 </template>
 
 <script>
-import ButtonsSocial from "../components/ButtonsSocial.vue";
-import Message from "../components/message";
+
 
 import {
   required,
@@ -445,8 +444,6 @@ export default {
     }
   },
   components: {
-    ButtonsSocial,
-    Message,
     ValidationProvider,
     ValidationObserver,
   },
