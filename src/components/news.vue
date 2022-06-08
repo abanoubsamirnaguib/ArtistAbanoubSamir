@@ -624,6 +624,7 @@
                       </v-col>
 
                       <WebShare
+                        v-if="shareit"
                         :shareit="shareit"
                         @closeDialog="closeWebShare"
                         :Title="items[SelectedItemIndex].title"
