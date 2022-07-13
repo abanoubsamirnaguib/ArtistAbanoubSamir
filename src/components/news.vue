@@ -894,17 +894,17 @@ export default {
         let base_url =
           // `http://192.168.1.10/music%20project/music%20project/public/api/News/addShare/${this.SelectedItems[i].id}`;
           `http://asmusicbackend-07251.herokuapp.com/public/api/News/addShare/${this.SelectedItems[i].id}`;
-        // axios
-        //   .get(base_url)
-        // .then((response) => {
-        //   var Data3 = response.data.data;
-        //   // this.items[i] = Data2;
-        //   console.log(Data3);
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        //   this.errored = true;
-        // });
+        axios
+          .get(base_url)
+        .then((response) => {
+          var Data3 = response.data.data;
+          // this.items[i] = Data2;
+          console.log(Data3);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        });
       }
       localStorage.setItem(
         `NewsShareOf${i}`,
@@ -1242,9 +1242,9 @@ export default {
     //   console.log(this.DataComment.length);
     //   this.api=true;
     // },
-    api(data) {
-      // console.log(data);
-    },
+    // api(data) {
+    //   console.log(data);
+    // },
     color() {
       this.switch1 = this.$store.state.switch;
     },
