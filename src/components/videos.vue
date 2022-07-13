@@ -251,7 +251,7 @@ import { Carousel3d, Slide } from "vue-carousel-3d";
 import search from "../components/subComment/search";
 import commentTemp1 from "../components/subComment/commentTemp1.vue";
 // import videosjson from "./videos.json";
-import yt from "./yt.js";
+// import yt from "./yt.js";
 
 export default {
   name: "Videos",
@@ -259,8 +259,9 @@ export default {
     valid: true,
     dialog: {},
     index: null,
-    videos: [
-      {},
+    // videos: [
+    //   {},
+    //     ],
       // {
       //   description: "The first Blender Open Movie from 2006",
       //   sources: [
@@ -272,7 +273,6 @@ export default {
       //   title: "Elephant Dream",
       //   comments: [],
       // },
-    ],
     //  [videosjson][0].videos,
 
     rules: [
@@ -318,16 +318,18 @@ export default {
     commentTemp1,
   },
 
-  created() {
-    yt({ apiKey: "AIzaSyDdK82uTv5IFGcMN9n1qSLRumzLf1z_i9U" }, (response) => {
-      this.videos = [];
-      this.videos = response.filter((video) => {
-        return video.title != "Deleted video";
-      });
+   created() {
+    // yt({ apiKey: "AIzaSyDdK82uTv5IFGcMN9n1qSLRumzLf1z_i9U" }, (response) => {
+      // this.videos = [];
+      // this.videos = response
+      // .filter((video) => {
+        // return video.title != "Deleted video";
+      // });
       // console.log(this.videos);
       for (let n = 0; n < this.videos.length; n++) {
         this.states[n] = this.videos[n].title;
-        this.videos[n].comments = response[n].comments;
+        // this.videos[n].comments = response[n].comments;
+
         // JSON.parse(localStorage.getItem(`VideoCommentsOf${n}`)) || [];
 
         // author
@@ -356,7 +358,9 @@ export default {
         } //end author
       }
       this.title.text = this.states[0];
-    });
+    // });
+    // console.log(this.videos);
+    
     // darkmode
     this.colorDark();
   },
@@ -426,6 +430,10 @@ export default {
     color() {
       return this.$store.state.color;
     },
+    videos(){
+      let response = this.$store.state.VideosModule.apivideos;
+      return response;
+    }
   },
   watch: {
     color() {

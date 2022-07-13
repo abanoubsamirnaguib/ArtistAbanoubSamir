@@ -32,7 +32,7 @@
       </v-row>
 
       <v-progress-circular
-        v-if="!info"
+        v-if="tracks.length == 0"
         :size="200"
         :width="10"
         color="red "
@@ -40,7 +40,7 @@
         indeterminate
       ></v-progress-circular>
 
-      <v-row v-if="info">
+      <v-row v-if="tracks.length > 0">
         <v-col :sm="12" :lg="6" class="order-10 order-lg-0">
           <carousel-3d
             :controls-visible="false"
@@ -466,7 +466,7 @@
                     :style="{ color: switch1 ? '' : color.color4 }"
                     >{{ currentTrack.likes.number }}</b
                   >
-                    <!-- :href="currentTrack.url" -->
+                  <!-- :href="currentTrack.url" -->
                   <a
                     :class="{ activeLink: currentTrack.share.bol }"
                     target="_blank"
@@ -751,25 +751,25 @@ export default {
     duration: null,
     currentTime: null,
     isTimerPlaying: false,
-    info: null,
-    tracks: [
-      {
-        title: "Mekanın Sahibi",
-        artist: "Norm Ender",
-        cover:
-          "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/1.jpg",
-        source:
-          "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/1.mp3",
-        url: "https://www.youtube.com/watch?v=z3wAjJXbYzA",
-        likes: { bol: false, number: 35 },
-        share: { bol: false, number: 35 },
-        Label: "music",
-        Released: "25/1/2021",
-        Description:
-          "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text,",
-        comments: [],
-      },
-    ],
+    info: [],
+    // tracks: [],
+    //   {
+    //     title: "Mekanın Sahibi",
+    //     artist: "Norm Ender",
+    //     cover:
+    //       "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/1.jpg",
+    //     source:
+    //       "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/1.mp3",
+    //     url: "https://www.youtube.com/watch?v=z3wAjJXbYzA",
+    //     likes: { bol: false, number: 35 },
+    //     share: { bol: false, number: 35 },
+    //     Label: "music",
+    //     Released: "25/1/2021",
+    //     Description:
+    //       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text,",
+    //     comments: [],
+    //   },
+    // ],
     currentTrack: null,
     currentTrackIndex: 0,
     transitionName: null,
@@ -817,7 +817,7 @@ export default {
     Carousel3d,
     Slide,
     search,
-    WebShare
+    WebShare,
   },
 
   methods: {
@@ -1209,92 +1209,158 @@ export default {
         this.$store.commit("dark");
       }
     },
-  },
+    createtracks() {
+      //beforeCreate
+      if (
+        this.$route.params.id >= 0 &&
+        this.$route.params.id <= this.tracks.length - 1
+      ) {
+        this.currentTrackIndex = this.$route.params.id;
+        this.currentTrack = this.tracks[this.currentTrackIndex];
+      } else {
+        this.currentTrack = this.tracks[0];
+      }
+      // get likes&share&comments from localStorage
+      for (let n = 0; n < this.tracks.length; n++) {
+        if (localStorage.getItem(`MusicLikesOf${n}`) !== null) {
+          this.tracks[n].likes.bol = JSON.parse(
+            localStorage.getItem(`MusicLikesOf${n}`)
+          ).bol;
+        }
+        if (localStorage.getItem(`MusicShareOf${n}`) !== null) {
+          this.tracks[n].share.bol = JSON.parse(
+            localStorage.getItem(`MusicShareOf${n}`)
+          ).bol;
+        }
+      }
+      this.trackslength = this.tracks.length;
+      //info
+      this.info = this.tracks[this.currentTrackIndex];
+      // search
+      for (let n = 0; n < this.tracks.length; n++) {
+        this.states[n] = this.tracks[n].title;
+      }
 
+      // Created
+      let vm = this;
+      this.currentTrack = this.tracks[this.currentTrackIndex];
+      this.audio = new Audio();
+      this.audio.src = this.currentTrack.source;
+      this.audio.ontimeupdate = function () {
+        vm.generateTime();
+      };
+      this.audio.onloadedmetadata = function () {
+        vm.generateTime();
+      };
+      this.audio.onended = function () {
+        vm.nextTrack();
+        this.isTimerPlaying = true;
+      };
+
+      // this is optional (for preload covers)
+      for (let index = 0; index < this.tracks.length; index++) {
+        const element = this.tracks[index];
+        let link = document.createElement("link");
+        link.rel = "prefetch";
+        link.href = element.cover;
+        link.as = "image";
+        document.head.appendChild(link);
+      }
+      //info
+      this.getComets();
+      // darkmode
+      this.colorDark();
+      this.resetPlayer();
+    },
+  },
+  updated() {
+    // console.log(this.tracks);
+  },
   beforeCreate() {
     // api
-    const axios = require("axios");
-    var base_url =
-      // "http://192.168.1.10/music%20project/music%20project/public/api/Music";
-      "http://asmusicbackend-07251.herokuapp.com/public/api/Music";
-    axios
-      .get(base_url)
-      .then((response) => {
-        var Data = response.data.data;
-        this.tracks = Data;
-
-        if (
-          this.$route.params.id > 0 &&
-          this.$route.params.id <= this.tracks.length - 1
-        ) {
-          this.currentTrackIndex = this.$route.params.id;
-          this.currentTrack = this.tracks[this.currentTrackIndex];
-        } else {
-          this.currentTrack = this.tracks[0];
-        }
-
-        // this.currentTrackIndex = 0;
-        // this.currentTrack = this.tracks[this.currentTrackIndex];
-        this.resetPlayer();
-        // console.log(this.tracks);
-        // get likes&share&comments from localStorage
-        for (let n = 0; n < this.tracks.length; n++) {
-          if (localStorage.getItem(`MusicLikesOf${n}`) !== null) {
-            this.tracks[n].likes.bol = JSON.parse(
-              localStorage.getItem(`MusicLikesOf${n}`)
-            ).bol;
-          }
-          if (localStorage.getItem(`MusicShareOf${n}`) !== null) {
-            this.tracks[n].share.bol = JSON.parse(
-              localStorage.getItem(`MusicShareOf${n}`)
-            ).bol;
-          }
-        }
-        this.trackslength = this.tracks.length;
-        //info
-        this.info = this.tracks[this.currentTrackIndex];
-        // search
-        for (let n = 0; n < this.tracks.length; n++) {
-          this.states[n] = this.tracks[n].title;
-          //comments
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        this.errored = true;
-      });
+    // const axios = require("axios");
+    // var base_url =
+    //   // "http://192.168.1.10/music%20project/music%20project/public/api/Music";
+    //   "http://asmusicbackend-07251.herokuapp.com/public/api/Music";
+    // axios
+    //   .get(base_url)
+    //   .then((response) => {
+    //     var Data = response.data.data;
+    //     this.tracks = Data;
+    // if (
+    //   this.$route.params.id >= 0 &&
+    //   this.$route.params.id <= this.tracks.length - 1
+    // ) {
+    //   this.currentTrackIndex = this.$route.params.id;
+    //   this.currentTrack = this.tracks[this.currentTrackIndex];
+    // } else {
+    //   this.currentTrack = this.tracks[0];
+    // }
+    // // this.currentTrackIndex = 0;
+    // // this.currentTrack = this.tracks[this.currentTrackIndex];
+    // // get likes&share&comments from localStorage
+    // for (let n = 0; n < this.tracks.length; n++) {
+    //   if (localStorage.getItem(`MusicLikesOf${n}`) !== null) {
+    //     this.tracks[n].likes.bol = JSON.parse(
+    //       localStorage.getItem(`MusicLikesOf${n}`)
+    //     ).bol;
+    //   }
+    //   if (localStorage.getItem(`MusicShareOf${n}`) !== null) {
+    //     this.tracks[n].share.bol = JSON.parse(
+    //       localStorage.getItem(`MusicShareOf${n}`)
+    //     ).bol;
+    //   }
+    // }
+    // this.trackslength = this.tracks.length;
+    // //info
+    // this.info = this.tracks[this.currentTrackIndex];
+    // // search
+    // for (let n = 0; n < this.tracks.length; n++) {
+    //   this.states[n] = this.tracks[n].title;
+    //   //comments
+    // }
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    //   this.errored = true;
+    // });
   },
   created() {
-    let vm = this;
-    this.currentTrack = this.tracks[this.currentTrackIndex];
-    // this.currentTrack = this.tracks[0];
-    this.audio = new Audio();
-    this.audio.src = this.currentTrack.source;
-    this.audio.ontimeupdate = function () {
-      vm.generateTime();
-    };
-    this.audio.onloadedmetadata = function () {
-      vm.generateTime();
-    };
-    this.audio.onended = function () {
-      vm.nextTrack();
-      this.isTimerPlaying = true;
-    };
-
-    // this is optional (for preload covers)
-    for (let index = 0; index < this.tracks.length; index++) {
-      const element = this.tracks[index];
-      let link = document.createElement("link");
-      link.rel = "prefetch";
-      link.href = element.cover;
-      link.as = "image";
-      document.head.appendChild(link);
+    if (this.tracks.length > 1) {
+      this.createtracks();
     }
-    //info
-    // this.info = this.tracks[this.currentTrackIndex];
-    this.getComets();
-    // darkmode
-    this.colorDark();
+
+    // let vm = this;
+    // this.currentTrack = this.tracks[this.currentTrackIndex];
+    // // this.currentTrack = this.tracks[0];
+    // this.audio = new Audio();
+    // this.audio.src = this.currentTrack.source;
+    // this.audio.ontimeupdate = function () {
+    //   vm.generateTime();
+    // };
+    // this.audio.onloadedmetadata = function () {
+    //   vm.generateTime();
+    // };
+    // this.audio.onended = function () {
+    //   vm.nextTrack();
+    //   this.isTimerPlaying = true;
+    // };
+
+    // // this is optional (for preload covers)
+    // for (let index = 0; index < this.tracks.length; index++) {
+    //   const element = this.tracks[index];
+    //   let link = document.createElement("link");
+    //   link.rel = "prefetch";
+    //   link.href = element.cover;
+    //   link.as = "image";
+    //   document.head.appendChild(link);
+    // }
+    // //info
+    // // this.info = this.tracks[this.currentTrackIndex];
+    // this.getComets();
+    // // darkmode
+    // this.colorDark();
+    // this.resetPlayer();
   },
   computed: {
     comments() {
@@ -1306,12 +1372,17 @@ export default {
     color() {
       return this.$store.state.color;
     },
+    tracks() {
+      let response = this.$store.state.MusicModule.Tracks;
+      // console.log(response);
+      return response;
+    },
   },
   watch: {
     tracks() {
       this.trackslength = this.tracks.length;
       this.getComets();
-      // console.log(this.trackslength);
+      this.createtracks();
     },
     color() {
       this.switch1 = this.$store.state.switch;

@@ -58,15 +58,23 @@
                       <v-col cols="6" style="padding: 0px; height: 300px">
                         <v-img :src="item.src" aspect-ratio="1" class="image">
                         </v-img>
-                        <div class="circle"  :style="{ backgroundColor: switch1 ? 'white' : color.color1 }" ></div>
+                        <div
+                          class="circle"
+                          :style="{
+                            backgroundColor: switch1 ? 'white' : color.color1,
+                          }"
+                        ></div>
                       </v-col>
-                      <v-col cols="6" light style="padding: 5px; height: 300px; ">
+                      <v-col cols="6" light style="padding: 5px; height: 300px">
                         <!-- <div> -->
                         <v-row>
                           <v-col cols="12" style="max-height: 15vh">
                             <v-card-title
-                              class="text-h5 font-weight-black "
-                              style="word-break: keep-all ; text-transform: capitalize;"
+                              class="text-h5 font-weight-black"
+                              style="
+                                word-break: keep-all;
+                                text-transform: capitalize;
+                              "
                               v-text="item.name"
                             ></v-card-title>
                             <v-card-subtitle
@@ -77,7 +85,7 @@
                         </v-row>
                         <v-row
                           style="
-                            padding:0px 10px;
+                            padding: 0px 10px;
                             overflow-x: hidden;
                             width: fit-content;
                           "
@@ -141,101 +149,98 @@
         </v-col>
       </v-row>
 
-                <v-progress-circular
-            v-if="(items.length == 1)"
-            :size="200"
-            :width="10"
-            color="red "
-            class="mt-4"
-            indeterminate
-          ></v-progress-circular>
+      <v-progress-circular
+        v-if="items.length < 1 "
+        :size="200"
+        :width="10"
+        color="red "
+        class="mt-4"
+        indeterminate
+      ></v-progress-circular>
     </v-container>
     <Message />
   </v-app>
 </template>
 
 <script>
-
-
 export default {
   name: "News",
   data: () => ({
     select: 0,
-    items: [{}
-      // {
-      //   color: "#1F7087",
-      //   src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-      //   name: "Supermodel",
-      //   job: "Foster the People",
-      //   description:
-      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-      //   likes: { bol: false, number: 256 },
-      //   share: { link: "https://www.facebook.com/", number: 35, bol: false },
-      //   category: "Life",
-      // },
-      // {
-      //   color: "#1F7087",
-      //   src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-      //   name: "Supermodel",
-      //   job: "Foster the People",
-      //   description:
-      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-      //   likes: { bol: false, number: 256 },
-      //   share: { link: "https://www.facebook.com/", number: 35, bol: false },
-      //   category: "Life",
-      // },
-      // {
-      //   color: "#1F7087",
-      //   src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-      //   name: "Supermodel",
-      //   job: "Foster the People",
-      //   description:
-      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-      //   likes: { bol: false, number: 256 },
-      //   share: { link: "https://www.facebook.com/", number: 35, bol: false },
-      //   category: "Life",
-      // },
-      // {
-      //   color: "#952175",
-      //   src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-      //   name: "Halcyon Days",
-      //   job: "Ellie Goulding",
-      //   description:
-      //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-      //   likes: { bol: false, number: 250 },
-      //   share: { link: "https://www.facebook.com/", number: 45, bol: false },
-      //   category: "Music",
-      // },
+    // items: [{}],
+    // {
+    //   color: "#1F7087",
+    //   src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
+    //   name: "Supermodel",
+    //   job: "Foster the People",
+    //   description:
+    //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+    //   likes: { bol: false, number: 256 },
+    //   share: { link: "https://www.facebook.com/", number: 35, bol: false },
+    //   category: "Life",
+    // },
+    // {
+    //   color: "#1F7087",
+    //   src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
+    //   name: "Supermodel",
+    //   job: "Foster the People",
+    //   description:
+    //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+    //   likes: { bol: false, number: 256 },
+    //   share: { link: "https://www.facebook.com/", number: 35, bol: false },
+    //   category: "Life",
+    // },
+    // {
+    //   color: "#1F7087",
+    //   src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
+    //   name: "Supermodel",
+    //   job: "Foster the People",
+    //   description:
+    //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+    //   likes: { bol: false, number: 256 },
+    //   share: { link: "https://www.facebook.com/", number: 35, bol: false },
+    //   category: "Life",
+    // },
+    // {
+    //   color: "#952175",
+    //   src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+    //   name: "Halcyon Days",
+    //   job: "Ellie Goulding",
+    //   description:
+    //     "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+    //   likes: { bol: false, number: 250 },
+    //   share: { link: "https://www.facebook.com/", number: 45, bol: false },
+    //   category: "Music",
+    // },
 
-    ],
     switch1: false,
   }),
   components: {},
-  created() {
-    const axios = require("axios");
-    var base_url =
-      // "http://192.168.1.10/music%20project/music%20project/public/api/testimonials";
-      "http://asmusicbackend-07251.herokuapp.com/public/api/testimonials";
-    axios
-      .get(base_url)
-      .then((response) => {
-        var Data = response.data.data;
-        this.items = Data;
-        console.log(this.items);
+  mounted() {
+    // const axios = require("axios");
+    // var base_url =
+    //   // "http://192.168.1.10/music%20project/music%20project/public/api/testimonials";
+    //   "http://asmusicbackend-07251.herokuapp.com/public/api/testimonials";
+    // axios
+    //   .get(base_url)
+    //   .then((response) => {
+    //     var Data = response.data.data;
+    //     this.items = Data;
+    //     console.log(this.items);
 
-        // get likes from localStorage
-        for (let n = 0; n < this.items.length; n++) {
-          if (localStorage.getItem(`testimonialsLikesOf${n}`) !== null) {
-            this.items[n].likes.bol = JSON.parse(
-              localStorage.getItem(`testimonialsLikesOf${n}`)
-            ).bol;
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        this.errored = true;
-      });
+    //     // get likes from localStorage
+    for (let n = 0; n < this.items.length; n++) {
+      if (localStorage.getItem(`testimonialsLikesOf${n}`) !== null) {
+        this.items[n].likes.bol = JSON.parse(
+          localStorage.getItem(`testimonialsLikesOf${n}`)
+        ).bol;
+      }
+    }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     this.errored = true;
+    //   });
 
     this.colorDark();
   },
@@ -250,8 +255,8 @@ export default {
         // ADD TO BACKEND
         const axios = require("axios");
         let base_url =
-        //  `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/addLike/${this.items[i].id}`;
-         `http://asmusicbackend-07251.herokuapp.com/public/api/testimonials/addLike/${this.items[i].id}`;
+          //  `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/addLike/${this.items[i].id}`;
+          `http://asmusicbackend-07251.herokuapp.com/public/api/testimonials/addLike/${this.items[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -267,9 +272,9 @@ export default {
         this.items[i].likes.number--;
         // ADD TO BACKEND
         const axios = require("axios");
-        let base_url = 
-        // `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/subLike/${this.items[i].id}`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/testimonials/subLike/${this.items[i].id}`;
+        let base_url =
+          // `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/subLike/${this.items[i].id}`;
+          `http://asmusicbackend-07251.herokuapp.com/public/api/testimonials/subLike/${this.items[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -300,6 +305,10 @@ export default {
   computed: {
     color() {
       return this.$store.state.color;
+    },
+    items() {
+      let response = this.$store.state.testimonialsModule.testimonials;
+      return response;
     },
   },
   watch: {

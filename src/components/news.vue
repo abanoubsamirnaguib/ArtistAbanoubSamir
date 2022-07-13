@@ -623,8 +623,8 @@
                         </v-card>
                       </v-col>
 
+                      <!-- v-if="shareit" -->
                       <WebShare
-                        v-if="shareit"
                         :shareit="shareit"
                         @closeDialog="closeWebShare"
                         :Title="items[SelectedItemIndex].title"
@@ -725,73 +725,72 @@ export default {
         color: "deep-purple lighten-1",
       },
     ],
-    items: [
-      {
-        color: "#1F7087",
-        src: `https://picsum.items/500/300?image=${Math.floor(
-          Math.random() * 11
-        )}`,
-        title: "Supermodel",
-        subTitle: "Foster the People",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 256 },
-        share: { link: "https://www.facebook.com/", number: 35, bol: false },
-        category: "Life",
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        title: "Halcyon Days",
-        subTitle: "Ellie Goulding",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 250 },
-        share: { link: "https://www.facebook.com/", number: 45, bol: false },
-        category: "Music",
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        title: "Halcyon Days",
-        subTitle: "Ellie Goulding",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 250 },
-        share: { link: "https://www.facebook.com/", number: 45, bol: false },
-        category: "Video",
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        title: "Halcyon Days 2",
-        subTitle: "Ellie Goulding 2",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 250 },
-        share: { link: "https://www.facebook.com/", number: 45, bol: false },
-        category: "Video",
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        title: "Halcyon Days Social",
-        subTitle: "Ellie Goulding",
-        description:
-          "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
-        likes: { bol: false, number: 250 },
-        share: { link: "https://www.facebook.com/", number: 45, bol: false },
-        category: "Social",
-      },
-    ],
+    // items: []
+    //   {
+    //     color: "#1F7087",
+    //     src: `https://picsum.items/500/300?image=${Math.floor(
+    //       Math.random() * 11
+    //     )}`,
+    //     title: "Supermodel",
+    //     subTitle: "Foster the People",
+    //     description:
+    //       "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+    //     likes: { bol: false, number: 256 },
+    //     share: { link: "https://www.facebook.com/", number: 35, bol: false },
+    //     category: "Life",
+    //   },
+    //   {
+    //     color: "#952175",
+    //     src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+    //     title: "Halcyon Days",
+    //     subTitle: "Ellie Goulding",
+    //     description:
+    //       "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+    //     likes: { bol: false, number: 250 },
+    //     share: { link: "https://www.facebook.com/", number: 45, bol: false },
+    //     category: "Music",
+    //   },
+    //   {
+    //     color: "#952175",
+    //     src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+    //     title: "Halcyon Days",
+    //     subTitle: "Ellie Goulding",
+    //     description:
+    //       "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+    //     likes: { bol: false, number: 250 },
+    //     share: { link: "https://www.facebook.com/", number: 45, bol: false },
+    //     category: "Video",
+    //   },
+    //   {
+    //     color: "#952175",
+    //     src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+    //     title: "Halcyon Days 2",
+    //     subTitle: "Ellie Goulding 2",
+    //     description:
+    //       "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+    //     likes: { bol: false, number: 250 },
+    //     share: { link: "https://www.facebook.com/", number: 45, bol: false },
+    //     category: "Video",
+    //   },
+    //   {
+    //     color: "#952175",
+    //     src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+    //     title: "Halcyon Days Social",
+    //     subTitle: "Ellie Goulding",
+    //     description:
+    //       "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",
+    //     likes: { bol: false, number: 250 },
+    //     share: { link: "https://www.facebook.com/", number: 45, bol: false },
+    //     category: "Social",
+    //   },
+    // ],
     rules: [
       (value) => !!value || "Required.",
       (value) => (value && value.length >= 3) || "Min 3 characters",
     ],
     // comment
     dialog: {},
-    Newslength: 0,
-    DataComment: [{}],
+    // DataComment: [{}],
     SelectedItemIndex: 0,
     cate: ["ALL", "Video", "Music", "Life", "Social"],
 
@@ -812,19 +811,10 @@ export default {
     // shareit
     shareit: false,
     data: {},
+
+    // api: false,
   }),
   components: { WebShare },
-  beforeCreate() {
-    // likes&share
-    // for (let n = 0; n < this.items.length; n++) {
-    //   this.items[n].likes =
-    //     JSON.parse(localStorage.getItem(`NewsLikesOf${n}`)) ||
-    //     this.items[n].likes;
-    //   this.items[n].share =
-    //     JSON.parse(localStorage.getItem(`NewsShareOf${n}`)) ||
-    //     this.items[n].share;
-    // }
-  },
   methods: {
     likes(i) {
       this.SelectedItems[i].likes.bol = !this.SelectedItems[i].likes.bol;
@@ -886,7 +876,7 @@ export default {
       // for web
       else {
         this.shareit = true;
-       
+
         this.data = {
           url: `https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir${this.$router.currentRoute.fullPath}`,
           title: this.SelectedItems[i].title,
@@ -904,23 +894,22 @@ export default {
         let base_url =
           // `http://192.168.1.10/music%20project/music%20project/public/api/News/addShare/${this.SelectedItems[i].id}`;
           `http://asmusicbackend-07251.herokuapp.com/public/api/News/addShare/${this.SelectedItems[i].id}`;
-        axios
-          .get(base_url)
-          // .then((response) => {
-          //   var Data3 = response.data.data;
-          //   // this.items[i] = Data2;
-          //   console.log(Data3);
-          // })
-          .catch((error) => {
-            console.log(error);
-            this.errored = true;
-          });
+        // axios
+        //   .get(base_url)
+        // .then((response) => {
+        //   var Data3 = response.data.data;
+        //   // this.items[i] = Data2;
+        //   console.log(Data3);
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        //   this.errored = true;
+        // });
       }
       localStorage.setItem(
         `NewsShareOf${i}`,
         JSON.stringify(this.SelectedItems[i].share)
       );
-      
     },
     // tabs
     // cat(value) {
@@ -947,7 +936,7 @@ export default {
       to = to.getTime();
       return new Date(from + Math.random() * (to - from));
     },
-    async getApi() {
+    getApi() {
       // Date news
       var d1 = new Date(2020, 1, 20);
       var d2 = new Date(2020, 12, 30);
@@ -959,92 +948,96 @@ export default {
       };
 
       // api
-      const axios = require("axios");
-      var base_url =
-        // "http://192.168.1.10/music%20project/music%20project/public/api/News";
-        "http://asmusicbackend-07251.herokuapp.com/public/api/News";
-      await axios
-        .get(base_url)
-        .then((response) => {
-          var Data = response.data.data;
-          this.items = Data;
-          this.SelectedItems = this.items;
-          // console.log(this.SelectedItems );
+      // const axios = require("axios");
+      // var base_url =
+      //   // "http://192.168.1.10/music%20project/music%20project/public/api/News";
+      //   "http://asmusicbackend-07251.herokuapp.com/public/api/News";
+      // await axios
+      //   .get(base_url)
+      //   .then((response) => {
+      //     var Data = response.data.data;
+      //     this.items = Data;
+      // console.log(this.SelectedItems );
 
-          // get likes from localStorage
-          for (let n = 0; n < this.items.length; n++) {
-            if (localStorage.getItem(`NewsLikesOf${n}`) !== null) {
-              this.items[n].likes.bol = JSON.parse(
-                localStorage.getItem(`NewsLikesOf${n}`)
-              ).bol;
-            }
-            if (localStorage.getItem(`NewsShareOf${n}`) !== null) {
-              this.items[n].share.bol = JSON.parse(
-                localStorage.getItem(`NewsShareOf${n}`)
-              ).bol;
-            }
+      // get likes from localStorage
+      for (let n = 0; n < this.items.length; n++) {
+        if (localStorage.getItem(`NewsLikesOf${n}`) !== null) {
+          this.items[n].likes.bol = JSON.parse(
+            localStorage.getItem(`NewsLikesOf${n}`)
+          ).bol;
+        }
+        if (localStorage.getItem(`NewsShareOf${n}`) !== null) {
+          this.items[n].share.bol = JSON.parse(
+            localStorage.getItem(`NewsShareOf${n}`)
+          ).bol;
+        }
 
-            // Date news
-            this.messages[n] = {
-              Title: this.items[n].title,
-              time:
-                this.items[n].Date ||
-                this.getRandomDate(d1, d2).toLocaleDateString("en-US", options),
-              color:
-                this.colors[Math.floor(Math.random() * this.colors.length)],
-            };
-            //comments
-            this.items[n].comments = [];
-            this.SelectedItems[n].comments = [];
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          this.errored = true;
-        });
-      this.Newslength = this.items.length;
+        // Date news
+        this.messages[n] = {
+          Title: this.items[n].title,
+          time:
+            this.items[n].Date ||
+            this.getRandomDate(d1, d2).toLocaleDateString("en-US", options),
+          color: this.colors[Math.floor(Math.random() * this.colors.length)],
+        };
+        //comments
+        // this.items[n].comments = [];
+        // this.SelectedItems[n].comments = [];
+      }
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      //   this.errored = true;
+      // });
+
       // console.log(this.Newslength);
       this.getComets();
+      this.SelectedItems = this.items;
     },
     // components
     getComets() {
-      const axios = require("axios");
-      var base_url =
-        // "http://192.168.1.10/music%20project/music%20project/public/api/comments/News";
-        "http://asmusicbackend-07251.herokuapp.com/public/api/comments/News";
-      axios.get(base_url).then((responseComment) => {
-        var DataComment = responseComment.data.data;
-        this.DataComment = DataComment;
-        // console.log(this.DataComment);
+      // const axios = require("axios");
+      // var base_url =
+      //   // "http://192.168.1.10/music%20project/music%20project/public/api/comments/News";
+      //   "http://asmusicbackend-07251.herokuapp.com/public/api/comments/News";
 
-        // console.log(this.Newslength);
-        for (let n = 0; n <= this.Newslength; n++) {
-          if (window.localStorage.getItem(`NewsCommentsOf${n}`) !== null) {
-            var Comments = this.DataComment.filter((e) => {
-              return e.Number == n;
-            });
-            var x = 0;
-            for (let i = 0; i < Comments.length; i++) {
-              if (
-                JSON.parse(localStorage.getItem(`NewsCommentsOf${n}`))[x] &&
-                Comments[i].id ==
-                  JSON.parse(localStorage.getItem(`NewsCommentsOf${n}`))[x].id
-              ) {
-                // console.log(JSON.parse((localStorage.getItem(`NewsCommentsOf${n}`)))[x].id + " "+ i );
-                Comments[i].author = JSON.parse(
-                  localStorage.getItem(`NewsCommentsOf${n}`)
-                )[x].author;
-                Comments[i].color = JSON.parse(
-                  localStorage.getItem(`NewsCommentsOf${n}`)
-                )[x].author
-                  ? "pink"
-                  : this.photos[n].comments[i].color;
-                x++;
-              }
+      // axios.get(base_url).then((responseComment) => {
+      //   var DataComment = responseComment.data.data;
+      //   this.DataComment = DataComment;
+      // console.log(this.DataComment);
+      for (let n = 0; n <= this.items.length; n++) {
+        if (window.localStorage.getItem(`NewsCommentsOf${n}`) !== null) {
+          var Comments = this.DataComment.filter((e) => {
+            return e.Number == n;
+          });
+          var x = 0;
+          for (let i = 0; i < Comments.length; i++) {
+            if (
+              JSON.parse(localStorage.getItem(`NewsCommentsOf${n}`))[x] &&
+              Comments[i].id ==
+                JSON.parse(localStorage.getItem(`NewsCommentsOf${n}`))[x].id
+            ) {
+              // console.log(JSON.parse((localStorage.getItem(`NewsCommentsOf${n}`)))[x].id + " "+ i );
+              Comments[i].author = JSON.parse(
+                localStorage.getItem(`NewsCommentsOf${n}`)
+              )[x].author;
+              Comments[i].color = JSON.parse(
+                localStorage.getItem(`NewsCommentsOf${n}`)
+              )[x].author
+                ? "pink"
+                : this.items[n].comments[i].color;
+              x++;
             }
           }
         }
-      });
+      }
+
+      // for (let n = 0; n < this.items.length; n++) {
+      //   this.items[n].comments = this.DataComment.filter((e) => {
+      //     return e.Number == n;
+      //   });
+      // }
+      // });
     },
     submitComment(n) {
       var n1 = this.items.indexOf(this.SelectedItems[n]);
@@ -1106,7 +1099,6 @@ export default {
       } else this.$refs.form1.reset();
       // this.dialog[n] = false;
     },
-
     editComment(n, p) {
       var n1 = this.items.indexOf(this.SelectedItems[n]);
       this.SelectedItems[n].comments[p] = {
@@ -1210,28 +1202,48 @@ export default {
       }
     },
   },
-  created() {
-    this.getApi();
+  mounted() {
+    if (this.items.length > 1 && Array.isArray(this.items[0].comments)) {
+      // console.log("loaded");
+      this.getApi();
+    }
     this.colorDark();
   },
+
   computed: {
-    api() {
-      return this.SelectedItems !== null && this.DataComment !== null;
+    items() {
+      // console.log("items");
+      let response = this.$store.state.NewsModule.News;
+      return response;
+    },
+    DataComment() {
+      // console.log("DataComment");
+      let response = this.$store.state.NewsModule.DataComment;
+      return response;
     },
     color() {
       return this.$store.state.color;
     },
+    api() {
+      // console.log("api");
+      return (
+        this.items.length > 1 &&
+        //  && Array.isArray(this.DataComment);
+        Array.isArray(this.items[0].comments)
+      );
+    },
   },
   watch: {
-    DataComment(val) {
-      this.Newslength = this.items.length;
-      // this.getComets();
-      // console.log(this.DataComment);
-      for (let n = 0; n < this.items.length; n++) {
-        this.items[n].comments = val.filter((e) => {
-          return e.Number == n;
-        });
-      }
+    items() {
+      // console.log("loaded0");
+      this.getApi();
+    },
+    // DataComment() {
+    //   console.log(this.DataComment.length);
+    //   this.api=true;
+    // },
+    api(data) {
+      // console.log(data);
     },
     color() {
       this.switch1 = this.$store.state.switch;

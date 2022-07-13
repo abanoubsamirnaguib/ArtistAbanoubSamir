@@ -248,7 +248,7 @@
 import search from "../components/subComment/search";
 import commentTemp1 from "../components/subComment/commentTemp1.vue";
 import "vue-cool-lightbox/dist/vue-cool-lightbox.min.css";
-import IG from "./IG.js";
+// import IG from "./IG.js";
 import CoolLightBox from "vue-cool-lightbox";
 
 export default {
@@ -258,15 +258,15 @@ export default {
     dialog: {},
     index: null,
     index2: null,
-    photos: [
-      {
-        title: `Photo number 0`,
-        description: `Photo number 0 description`,
-        src: ``,
-        number: 0,
-        comments: [],
-      },
-    ],
+    // photos: [
+    //   {
+    //     title: `Photo number 0`,
+    //     description: `Photo number 0 description`,
+    //     src: ``,
+    //     number: 0,
+    //     comments: [],
+    //   },
+    // ],
     // rules: [
     //   (value) => !!value || "Required.",
     //   (value) => (value && value.length >= 3) || "Min 3 characters",
@@ -314,16 +314,16 @@ export default {
   },
   created() {
     // IG
-    IG((response) => {
-      this.photos = response;
-      // this.photos =[];
-      for (let n = 0; n < response.length; n++) {
+    // IG((response) => {
+      // this.photos = response;
+if(this.photos){
+      for (let n = 0; n < this.photos.length; n++) {
         this.photos[n] = Object.assign({
-          title: `Photo ${response[n].position + 1}`,
-          description: response[n].description,
-          src: response[n].src,
-          number: response[n].position,
-          comments: response[n].comments,
+          title: this.photos[n].title,
+          description: this.photos[n].description,
+          src: this.photos[n].src,
+          number: this.photos[n].position,
+          comments: this.photos[n].comments,
           // JSON.parse(localStorage.getItem(`PhotoCommentsOf${n}`)) || [],
         });
         this.states[n] = this.photos[n].title;
@@ -353,7 +353,8 @@ export default {
           }
         } //end author
       }
-    });
+      }
+    // });
 
     // for (let n = 0; n < 16; n++) {
     //   this.photos[n] = {
@@ -552,6 +553,10 @@ export default {
     },
   },
   computed: {
+      photos(){
+      let response = this.$store.state.PhotosModule.apiPhotos;
+      return response;
+    },
     color() {
       return this.$store.state.color;
     },
@@ -560,6 +565,7 @@ export default {
     color() {
       this.switch1 = this.$store.state.switch;
     },
+
   },
 };
 </script>

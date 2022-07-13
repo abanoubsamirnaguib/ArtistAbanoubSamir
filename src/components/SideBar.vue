@@ -30,7 +30,7 @@
 
       <v-switch
         v-if="!mini"
-        class="ml-10 text--black"
+        class="ml-10 text--black font-weight-black"
         v-model="switch1"
         inset
         @change="colorDark()"
@@ -38,7 +38,7 @@
         :label="`${switch1 ? 'Color' : 'Dark'} `"
       ></v-switch>
 
-      <h4 class="mt-6 ml-5 white--text text-left" v-if="!mini">Introduction</h4>
+      <h4 class="mt-6 ml-5 white--text text-left text-overline" v-if="!mini">Introduction</h4>
       <v-list flat dense class="mt-0 text-left">
         <v-list-item-group v-model="selectedItem" color="orange">
           <v-list-item

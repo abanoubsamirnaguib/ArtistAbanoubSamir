@@ -1,5 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VideosModule from './Videos'
+import testimonialsModule from './testimonials'
+import NewsModule from './News'
+import MusicModule from './Music'
+import PhotosModule from './photos'
 
 Vue.use(Vuex)
 
@@ -43,5 +48,10 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    VideosModule,
+    PhotosModule,
+    testimonialsModule,
+    NewsModule,
+    MusicModule
   }
 })
