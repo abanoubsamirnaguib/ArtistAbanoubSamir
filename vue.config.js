@@ -2,19 +2,19 @@
 const SitemapPlugin = require('sitemap-webpack-plugin').default;
 const paths = [
   {
-    path: '/ArtistAbanoubSamir/',
+    path: '/',
     lastmod: new Date().toISOString().slice(0, 10),
     priority: 0.8,
     changefreq: 'hourly'
   },
   {
-    path: '/ArtistAbanoubSamir/AboutMe/',
+    path: '/AboutMe/',
     lastmod: new Date().toISOString().slice(0, 10),
     priority: 0.8,
     changefreq: 'hourly'
   },
   {
-    path: '/ArtistAbanoubSamir/Home/',
+    path: '/Home/',
     lastmod: new Date().toISOString().slice(0, 10),
     priority: 0.8,
     changefreq: 'hourly'
@@ -33,7 +33,7 @@ module.exports = {
   // },
   
   // publicPath: process.env.NODE_ENV === "production" ? "http://localhost/music%20project/dist/" : "/",
-  publicPath: process.env.NODE_ENV === "production" ? "/ArtistAbanoubSamir" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/" : "/",
 
   chainWebpack: config => {
     config
@@ -49,7 +49,7 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new SitemapPlugin({
-        base: 'https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir', paths, options: {
+        base: 'https://www.abanoubsamir/', paths, options: {
           filename: 'sitemap.xml',
           lastmod: true,
           changefreq: 'hourly',

@@ -25,3 +25,5 @@ pnpm-debug.log*
 src/components/test1.vue
 # src/components/subComment
 /temp
+/backend
+/dist2
