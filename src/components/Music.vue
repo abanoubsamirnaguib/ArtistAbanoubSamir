@@ -937,14 +937,14 @@ export default {
         const axios = require("axios");
         let base_url =
           //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/addLike/${this.tracks[i].id}`;
-          `http://asmusicbackend-07251.herokuapp.com/public/api/Music/addLike/${this.tracks[i].id}`;
+          `${process.env.VUE_APP_base_url}/Music/addLike/${this.tracks[i].id}`;
         axios.get(base_url);
       } else {
         this.tracks[i].likes.number--;
         const axios = require("axios");
         let base_url =
           //  `http://192.168.1.10/music%20project/music%20project/public/api/Music/subLike/${this.tracks[i].id}`;
-          `http://asmusicbackend-07251.herokuapp.com/public/api/Music/subLike/${this.tracks[i].id}`;
+          `${process.env.VUE_APP_base_url}/Music/subLike/${this.tracks[i].id}`;
         axios.get(base_url);
       }
       localStorage.setItem(
@@ -958,13 +958,15 @@ export default {
         this.shareitAction(
           "share a track ",
           `listen to ${this.tracks[i].title}`,
-          `https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir${this.$router.currentRoute.fullPath}`
+          // `https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir${this.$router.currentRoute.fullPath}`
+          `https://artist.abanoubsamir.com${this.$router.currentRoute.fullPath}`
         );
       }
       // for web
       else {
         this.data = {
-          url: `https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir${this.$router.currentRoute.fullPath}`,
+          // url: `https://abanoubsamirnaguib.github.io/ArtistAbanoubSamir${this.$router.currentRoute.fullPath}`,
+          url: `https://artist.abanoubsamir.com${this.$router.currentRoute.fullPath}`,
           title: this.tracks[i].title,
           description: this.tracks[i].Description,
           quote: this.tracks[i].artist,
@@ -1017,7 +1019,8 @@ export default {
       const axios = require("axios");
       var base_url =
         // "http://192.168.1.10/music%20project/music%20project/public/api/comments/Music";
-        "http://asmusicbackend-07251.herokuapp.com/public/api/comments/Music";
+        // "http://asmusicbackend-07251.herokuapp.com/public/api/comments/Music";
+        `${process.env.VUE_APP_base_url}/comments/Music`;
       axios.get(base_url).then((responseComment) => {
         var DataComment = responseComment.data.data;
         this.DataComment = DataComment;
@@ -1061,7 +1064,7 @@ export default {
       const axios = require("axios");
       let base_url =
         // `http://192.168.1.10/music%20project/music%20project/public/api/comments/addMusicComment`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addMusicComment`;
+        `${process.env.VUE_APP_base_url}/comments/addMusicComment`;
       axios
         .post(base_url, {
           name: this.name,
@@ -1120,7 +1123,7 @@ export default {
       const axios = require("axios");
       let base_url =
         //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/editMusicComment/${this.comments[p].id}`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editMusicComment/${this.comments[p].id}`;
+        `${process.env.VUE_APP_base_url}/comments/editMusicComment/${this.comments[p].id}`;
       axios
         .post(base_url, {
           name: this.Editname,
@@ -1164,7 +1167,7 @@ export default {
       const axios = require("axios");
       let base_url =
         //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteMusicComment/${this.comments[p].id}`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteMusicComment/${this.comments[p].id}`;
+        `${process.env.VUE_APP_base_url}/comments/deleteMusicComment/${this.comments[p].id}`;
       axios.post(base_url).then((response) => {
         this.resp = response.data.Success;
         this.snackbar = true;

@@ -14,7 +14,7 @@ export default {
             return new Promise(( res, rej ) => {
                 var base_url =
                   // "http://192.168.1.10/music%20project/music%20project/public/api/Music";
-                  "http://asmusicbackend-07251.herokuapp.com/public/api/Music";
+                  `${process.env.VUE_APP_base_url}/Music`;
                 axios
                   .get(base_url)
                   .then((response) => {

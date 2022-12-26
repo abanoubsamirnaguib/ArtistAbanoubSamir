@@ -27,3 +27,4 @@ src/components/test1.vue
 /temp
 /backend
 /dist2
+.env.local

@@ -256,7 +256,7 @@ export default {
         const axios = require("axios");
         let base_url =
           //  `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/addLike/${this.items[i].id}`;
-          `http://asmusicbackend-07251.herokuapp.com/public/api/testimonials/addLike/${this.items[i].id}`;
+          `${process.env.VUE_APP_base_url}/testimonials/addLike/${this.items[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -274,7 +274,7 @@ export default {
         const axios = require("axios");
         let base_url =
           // `http://192.168.1.10/music%20project/music%20project/public/api/testimonials/subLike/${this.items[i].id}`;
-          `http://asmusicbackend-07251.herokuapp.com/public/api/testimonials/subLike/${this.items[i].id}`;
+          `${process.env.VUE_APP_base_url}/testimonials/subLike/${this.items[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {

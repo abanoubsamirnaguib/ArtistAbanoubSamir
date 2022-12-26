@@ -825,7 +825,7 @@ export default {
         const axios = require("axios");
         let base_url =
           //  `http://192.168.1.10/music%20project/music%20project/public/api/News/addLike/${this.SelectedItems[i].id}`;
-          `http://asmusicbackend-07251.herokuapp.com/public/api/News/addLike/${this.SelectedItems[i].id}`;
+          `${process.env.VUE_APP_base_url}/News/addLike/${this.SelectedItems[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -841,7 +841,7 @@ export default {
         const axios = require("axios");
         let base_url =
           // `http://192.168.1.10/music%20project/music%20project/public/api/News/subLike/${this.SelectedItems[i].id}`;
-          `http://asmusicbackend-07251.herokuapp.com/public/api/News/subLike/${this.SelectedItems[i].id}`;
+          `${process.env.VUE_APP_base_url}/News/subLike/${this.SelectedItems[i].id}`;
         axios
           .get(base_url)
           // .then((response) => {
@@ -893,7 +893,7 @@ export default {
         const axios = require("axios");
         let base_url =
           // `http://192.168.1.10/music%20project/music%20project/public/api/News/addShare/${this.SelectedItems[i].id}`;
-          `http://asmusicbackend-07251.herokuapp.com/public/api/News/addShare/${this.SelectedItems[i].id}`;
+          `${process.env.VUE_APP_base_url}/News/addShare/${this.SelectedItems[i].id}`;
         axios
           .get(base_url)
         .then((response) => {
@@ -1052,7 +1052,7 @@ export default {
       const axios = require("axios");
       let base_url =
         //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/addNewsComment`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/addNewsComment`;
+        `${process.env.VUE_APP_base_url}/comments/addNewsComment`;
       axios
         .post(base_url, {
           name: this.name,
@@ -1113,7 +1113,7 @@ export default {
       const axios = require("axios");
       let base_url =
         // `http://192.168.1.10/music%20project/music%20project/public/api/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
+        `${process.env.VUE_APP_base_url}/comments/editNewsComment/${this.SelectedItems[n].comments[p].id}`;
       axios
         .post(base_url, {
           name: this.Editname,
@@ -1156,7 +1156,7 @@ export default {
       const axios = require("axios");
       let base_url =
         //  `http://192.168.1.10/music%20project/music%20project/public/api/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
-        `http://asmusicbackend-07251.herokuapp.com/public/api/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
+        `${process.env.VUE_APP_base_url}/comments/deleteNewsComment/${this.SelectedItems[n].comments[p].id}`;
       axios.post(base_url).then((response) => {
         this.resp = response.data.Success;
         this.snackbar = true;

@@ -27,7 +27,7 @@ export default {
                         // comments
                         var base_url =
                             // "http://192.168.1.10/music%20project/music%20project/public/api/comments/Videos";
-                            "http://asmusicbackend-07251.herokuapp.com/public/api/comments/Videos";
+                            `${process.env.VUE_APP_base_url}/comments/Videos`;
                         axios
                             .get(base_url)
                             .then((responseComment) => {

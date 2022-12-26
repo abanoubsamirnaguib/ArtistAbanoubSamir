@@ -15,7 +15,7 @@ export default {
             return new Promise((res, rej) => {
                 var base_url =
                 //   "http://192.168.1.10/music%20project/music%20project/public/api/News";
-                  "http://asmusicbackend-07251.herokuapp.com/public/api/News";
+                  `${process.env.VUE_APP_base_url}/News`;
                  axios
                   .get(base_url)
                   .then((response) => {
@@ -23,7 +23,7 @@ export default {
 
                     var base_url2 =
                     // "http://192.168.1.10/music%20project/music%20project/public/api/comments/News";
-                    "http://asmusicbackend-07251.herokuapp.com/public/api/comments/News";
+                    `${process.env.VUE_APP_base_url}/comments/News`;
             
                   axios.get(base_url2).then((responseComment) => {
                     var DataComment = responseComment.data.data;

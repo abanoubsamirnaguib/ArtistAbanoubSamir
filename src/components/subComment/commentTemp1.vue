@@ -359,7 +359,7 @@ export default {
       const axios = require("axios");
       let base_url = 
       // `http://192.168.1.10/music%20project/music%20project/public/api/comments/add${this.type}Comment`;
-      `http://asmusicbackend-07251.herokuapp.com/public/api/comments/add${this.type}Comment`;
+      `${process.env.VUE_APP_base_url}/comments/add${this.type}Comment`;
       axios
         .post(base_url, {
           name: this.name,
@@ -420,7 +420,7 @@ export default {
       const axios = require("axios");
       let base_url = 
       // `http://192.168.1.10/music%20project/music%20project/public/api/comments/edit${this.type}Comment/${this.data.comments[p].id}`;
-      `http://asmusicbackend-07251.herokuapp.com/public/api/comments/edit${this.type}Comment/${this.data.comments[p].id}`;
+      `${process.env.VUE_APP_base_url}/comments/edit${this.type}Comment/${this.data.comments[p].id}`;
       axios
         .post(base_url, {
           name: this.Editname,
@@ -470,7 +470,7 @@ export default {
       const axios = require("axios");
       let base_url = 
       // `http://192.168.1.10/music%20project/music%20project/public/api/comments/delete${this.type}Comment/${this.data.comments[p].id}`;
-      `http://asmusicbackend-07251.herokuapp.com/public/api/comments/delete${this.type}Comment/${this.data.comments[p].id}`;
+      `${process.env.VUE_APP_base_url}/comments/delete${this.type}Comment/${this.data.comments[p].id}`;
       axios.post(base_url).then((response) => {
         this.resp = response.data.Success;
         this.snackbar = true;
